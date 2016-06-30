@@ -1,10 +1,9 @@
-
 # https://nginx.org/en/docs/http/ngx_http_core_module.html
 #
 default['nginx_resources']['core']['config'].tap do |config|
   config['access_log'] = 'off' # TODO
 
-  config['client_body_buffer_size'] = '16k'
+  config['client_body_buffer_size'] = '128k'
   config['client_body_timeout'] = '60s'
   config['client_header_buffer_size'] = '1k'
   config['client_header_timeout'] = '60s'
@@ -18,7 +17,23 @@ default['nginx_resources']['core']['config'].tap do |config|
 
   config['large_client_header_buffers'] = '4 8k'
 
-  config['open_file_cache'] = false
+  config['log_formats']['friendly_syslog'] = %w(
+		$server_name:$server_port
+		-
+		$remote_addr
+		-
+		$upstream_addr
+		-
+		$status
+		-
+		$request_time[$upstream_response_time]
+		-
+		\"$request\""
+		-
+		\"$http_user_agent\" 
+  ).join(' ')
+
+  config['open_file_cache'] = true
 	config['open_file_cache_max'] = 20000
   config['open_file_cache_inactive'] = '60s'
   config['open_file_cache_min_uses'] = 1
