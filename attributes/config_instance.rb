@@ -18,8 +18,8 @@ default['nginx_resources']['instance']['config'].tap do |config|
     }
   }
 
-  config['worker_connections'] = 512
+  config['worker_connections'] = 5000
   config['worker_processes'] = 'auto'
-  config['worker_rlimit_nofile'] = '1024'
+  config['worker_rlimit_nofile'] = 65000
 end
 

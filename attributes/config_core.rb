@@ -13,8 +13,9 @@ default['nginx_resources']['core']['config'].tap do |config|
 
   config['default_type'] = 'application/octet-stream'
 
+  config['keepalive'] = true
   config['keepalive_requests'] = 100
-  config['keepalive_timeout'] = '75s'
+  config['keepalive_timeout'] = '5s'
 
   config['large_client_header_buffers'] = '4 8k'
 
@@ -38,11 +39,11 @@ default['nginx_resources']['core']['config'].tap do |config|
   config['server_names_hash_bucket_size'] = 128
   config['server_names_hash_max_size'] = 512
 
-  config['tcp_no_push'] = false
+  config['tcp_nopush'] = true
   config['tcp_nodelay'] = true
   
   config['types_hash_bucket_size'] = 64
-  config['types_hash_max_size'] = 1024
+  config['types_hash_max_size'] = 2048
   
   config['underscores_in_headers'] = false
 
