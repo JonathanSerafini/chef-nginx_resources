@@ -2,7 +2,7 @@
 server {
   server_name <%= @server_name.join("\n    ") %>;
   <% @listen.each do |listen_port| %>
-  listen <%= listen_port %><% if @listen_params %><%= hash_to_s(@listen_params) %><% end %>;
+  listen <%= listen_port %><% if @listen_params %> <%= hash_to_s(@listen_params) %><% end %>;
   <% end %>
   root <%= @root %>;
 

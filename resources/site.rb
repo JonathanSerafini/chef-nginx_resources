@@ -21,11 +21,15 @@ property :listen,
 
 property :listen_params,
   kind_of: Hash,
-  default: Hash.new
+  default: lazy { |r|
+    node['nginx_resources']['site']['listen_params']
+  }
 
 property :includes,
   kind_of: Array,
-  default: Array.new
+  default: lazy { |r|
+    node['nginx_resources']['site']['includes']
+  }
 
 property :root,
   kind_of: String,

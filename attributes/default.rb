@@ -13,6 +13,20 @@ default['nginx_resources']['log_dir'] = '/var/log/nginx'
 default['nginx_resources']['log_group'] = 'adm'
 default['nginx_resources']['log_dir_perm'] = '0750'
 
+# Default site options
+#
+default['nginx_resources']['site']['listen_params'] = {
+  'reuseport' => true
+}
+default['nginx_resources']['site']['includes'] = []
+default['nginx_resources']['site']['default_site'].tap do |config|
+  config['priority'] = '20'
+  config['listen'] = '80'
+  config['server_name'] = '_'
+  config['root'] = '/var/www/html'
+  config['enabled'] = false
+end
+
 # Default service options
 #
 default['nginx_resources']['service']['name'] = "service[nginx]"
@@ -42,15 +56,4 @@ default['nginx_resources']['source']['include_recipes'] = %w(
   nginx_resources::module_gzip
   nginx_resources::module_lua
 )
-
-# Default site options
-#
-default['nginx_resources']['default_site'].tap do |config|
-  config['priority'] = '20'
-  config['server_name'] = '_'
-  config['listen'] = '80'
-  config['includes'] = []
-  config['root'] = '/var/www/html'
-  config['enabled'] = false
-end
 

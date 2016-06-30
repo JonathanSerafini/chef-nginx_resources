@@ -72,7 +72,12 @@ action :create do
     end
 
     helper :hash_to_s do |hash|
-      hash.map{|k,v| "#{k}=#{v}"}.join(" ")
+      hash.map do |k,v|
+        if [false,nil].include?(v) then next
+        elsif v == true then k
+        else "#{k}=#{v}"
+        end
+      end.join(" ")
     end
 
     notifies :restart, nginx_instance_resource.service, :delayed

@@ -13,7 +13,6 @@ default['nginx_resources']['core']['config'].tap do |config|
 
   config['default_type'] = 'application/octet-stream'
 
-  config['keepalive'] = true
   config['keepalive_requests'] = 100
   config['keepalive_timeout'] = '5s'
 

@@ -40,6 +40,7 @@ nginx_resources_site 'default' do
     priority
     server_name
     listen
+    listen_params
     includes
     root
     locations
@@ -48,7 +49,7 @@ nginx_resources_site 'default' do
     source
     enabled
   ).each do |key|
-    value = node['nginx_resources']['default_site'][key]
+    value = node['nginx_resources']['site']['default_site'][key]
     send(key, value) unless value.nil?
   end
 end
