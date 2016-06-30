@@ -22,16 +22,16 @@ end
 # Download lua nginx source
 #
 nginx_resources_module 'module_lua' do
-  module_path "modules/ngx_http_lua_module"
-  version   node['nginx_resources']['module_lua']['version']
-  checksum  node['nginx_resources']['module_lua']['checksum']
-  source    node['nginx_resources']['module_lua']['source']
+  module_path node['nginx_resources']['lua']['module']['module_path']
+  version   node['nginx_resources']['lua']['module']['version']
+  checksum  node['nginx_resources']['lua']['module']['checksum']
+  source    node['nginx_resources']['lua']['module']['source']
 end
 
 nginx_resources_config "lua" do
   priority  '30'
   category  'config'
   source    'config/generic.conf.erb'
-  configs    node['nginx_resources']['config_lua']
+  configs    node['nginx_resources']['lua']['config']
 end
 

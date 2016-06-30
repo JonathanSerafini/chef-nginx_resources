@@ -1,18 +1,21 @@
 # ngx_http_ssl_module
 # http://nginx.org/en/docs/http/ngx_http_ssl_module.html
 
-default['nginx_resources']['module_ssl'].tap do |mod|
-  v = '1.0.2h'
-
-  mod['source'] = "https://www.openssl.org/source/openssl-#{v}.tar.gz"
-  mod['version'] = "#{v}"
-  mod['checksum'] = '1d4007e53aad94a5b2002fe045ee7bb0b3d98f1a47f8b2bc851dcd1c74332919'
-  mod['archive_depth'] = 1
-  mod['use_native'] = false
-  mod['generate_dhparam'] = true
+default['nginx_resources']['ssl'].tap do |config|
+  config['archive_depth'] = 1
+  config['use_native'] = false
+  config['generate_dhparam'] = true
 end
 
-default['nginx_resources']['config_ssl'].tap do |config|
+default['nginx_resources']['ssl']['module'].tap do |config|
+  v = '1.0.2h'
+
+  config['source'] = "https://www.openssl.org/source/openssl-#{v}.tar.gz"
+  config['version'] = "#{v}"
+  config['checksum'] = '1d4007e53aad94a5b2002fe045ee7bb0b3d98f1a47f8b2bc851dcd1c74332919'
+end
+
+default['nginx_resources']['ssl']['config'].tap do |config|
   config['ssl'] = true
   config['ssl_buffer_size'] = '16k'
   config['ssl_dhparam'] = '/etc/ssl/dhparam.pem'

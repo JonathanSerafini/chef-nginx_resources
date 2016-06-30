@@ -1,7 +1,7 @@
 
 # https://nginx.org/en/docs/http/ngx_http_core_module.html
 #
-default['nginx_resources']['config_core'].tap do |config|
+default['nginx_resources']['core']['config'].tap do |config|
   config['access_log'] = 'off' # TODO
 
   config['client_body_buffer_size'] = '16k'

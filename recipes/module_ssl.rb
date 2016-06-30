@@ -1,5 +1,5 @@
 
-if node['nginx_resources']['module_ssl']['use_native']
+if node['nginx_resources']['ssl']['use_native']
   packages = value_for_platform_family(
     %w(rhel fedora suse) => %w(openssl-devel),
     %w(gentoo) => [],
@@ -11,9 +11,9 @@ if node['nginx_resources']['module_ssl']['use_native']
   end
 else
   source = nginx_resources_source 'module_ssl' do
-    version   node['nginx_resources']['module_ssl']['version']
-    checksum  node['nginx_resources']['module_ssl']['checksum']
-    source    node['nginx_resources']['module_ssl']['source']
+    version   node['nginx_resources']['ssl']['module']['version']
+    checksum  node['nginx_resources']['ssl']['module']['checksum']
+    source    node['nginx_resources']['ssl']['module']['source']
   end
 
   node.default['nginx_resources']['source'].tap do |source_attr|
@@ -25,7 +25,7 @@ end
 config = nginx_resources_config 'ssl' do
   category  'config'
   source    'config/generic.conf.erb'
-  configs    node['nginx_resources']['config_ssl']
+  configs    node['nginx_resources']['ssl']['config']
 end
 
 bash "generate_dhparam" do
@@ -36,7 +36,7 @@ bash "generate_dhparam" do
     ::File.exists?("/etc/ssl/dhparam.pem")
   end
   only_if do
-    node['nginx_resources']['module_ssl']['generate_dhparam']
+    node['nginx_resources']['ssl']['generate_dhparam']
   end
 end
 

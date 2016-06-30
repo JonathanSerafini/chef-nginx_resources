@@ -84,8 +84,7 @@ property :configs,
     when Chef::Node::ImmutableMash then v.to_hash
     else v
     end
-  },
-  default: lazy { |r| node['nginx_resources']['config_instance'] }
+  }
 
 action :install do
   %w(root_dir conf_dir sbin_dir pid_dir).each do |key|

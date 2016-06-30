@@ -20,7 +20,7 @@ server {
   <% @locations.each do |location_hash| %>
   location <%= location_hash['path'] %> {
     try_files <%= location_hash['try_files'] %>;
-    <% location_hash['configs'].each do |k,v| %>
+    <% Hash(location_hash['configs']).each do |k,v| %>
     <%= k %> <% v %>;
     <% end %>
   }

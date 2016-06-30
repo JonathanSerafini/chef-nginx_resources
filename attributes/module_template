@@ -1,6 +1,0 @@
-default['nginx_resources'][''].tap do |mod|
-  mod['source'] = ''
-  mod['version'] = ''
-  mpd['checksum'] = ''
-  mod['archive_depth'] = 1
-end

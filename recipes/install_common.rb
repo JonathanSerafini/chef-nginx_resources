@@ -2,6 +2,7 @@
 #
 nginx_resources_instance 'default' do
   service node['nginx_resources']['service']['name']
+  configs node['nginx_resources']['instance']['config']
 end
 
 # Default config file fragments
@@ -15,21 +16,21 @@ nginx_resources_config 'core' do
   category 'config'
   priority '20'
   source   'config/core.conf.erb'
-  configs   node['nginx_resources']['config_core']
+  configs   node['nginx_resources']['core']['config']
 end
 
 nginx_resources_config 'custom' do
   category 'config'
   priority '90'
   source   'config/generic.conf.erb'
-  configs  node['nginx_resources']['config_custom']
+  configs  node['nginx_resources']['custom']['config']
 end
 
 # Default config file includes
 #
 nginx_resources_config 'health' do
   category 'include'
-  configs  node['nginx_resources']['config_health']
+  configs  node['nginx_resources']['health']['config']
 end
 
 # Default virtualhost

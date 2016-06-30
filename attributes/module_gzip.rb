@@ -1,7 +1,7 @@
 # ngx_http_gzip_module
 # http://nginx.org/en/docs/http/ngx_http_gzip_module.html
 
-default['nginx_resources']['config_gzip'].tap do |config|
+default['nginx_resources']['gzip']['config'].tap do |config|
   config['gzip'] = true
   config['gzip_buffers'] = '16 8k'
   config['gzip_comp_level'] = 2

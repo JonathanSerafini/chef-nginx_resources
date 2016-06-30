@@ -1,3 +1,3 @@
 
-default['nginx_resources']['config_custom'] = {}
+default['nginx_resources']['custom']['config'] = {}
 

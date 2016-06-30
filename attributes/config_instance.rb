@@ -1,5 +1,5 @@
 
-default['nginx_resources']['config_instance'].tap do |config|
+default['nginx_resources']['instance']['config'].tap do |config|
   # ngx_core_module
   #
   config['aio'] = 'threads=default'

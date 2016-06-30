@@ -1,7 +1,7 @@
 
 nginx_resources_config 'realip' do
   category  'config'
-  configs    node['nginx_resources']['config_realip']
+  configs    node['nginx_resources']['realip']['config']
 end
 
 node.default['nginx_resources']['source'].tap do |source_attr|
