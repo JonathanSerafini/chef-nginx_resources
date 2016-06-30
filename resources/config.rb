@@ -142,7 +142,16 @@ action_class do
 
   def template_variables
     variables = {}.merge(new_resource.variables)
-    variables.merge({'configs' => new_resource.configs})
+    variables = {
+      'name'      => new_resource.name,
+      'pid_dir'   => nginx_instance_resource.pid_dir,
+      'log_dir'   => nginx_instance_resource.log_dir,
+      'conf_dir'  => nginx_instance_resource.conf_dir,
+      'spool_dir' => nginx_instance_resource.spool_dir
+    }
+    variables.merge!(new_resource.variables)
+    variables['configs'] = new_resource.configs
+    variables
   end
 end
 
