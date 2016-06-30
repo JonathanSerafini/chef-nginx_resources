@@ -1,0 +1,28 @@
+
+server {
+  server_name <%= @server_name.join("\n    ") %>;
+  <% @listen.each do |listen_port| %>
+  listen <%= listen_port %><% if @listen_params %><%= hash_to_s(@listen_params) %><% end %>;
+  <% end %>
+  root <%= @root %>;
+
+  <% if @configs['ssl_certificate'] %>
+  ssl_certificate <%= @configs['ssl_certificate'] %>;
+  ssl_certificate_key <%= @configs['ssl_certificate_key'] %>;
+
+  <% end %>
+  <% if @includes.any? %>
+  <% @includes.each do |include_path| %>
+  include <%= include_path %>;
+  <% end %>
+
+  <% end %>
+  <% @locations.each do |location_hash| %>
+  location <%= location_hash['path'] %> {
+    try_files <%= location_hash['try_files'] %>;
+    <% location_hash['configs'].each do |k,v| %>
+    <%= k %> <% v %>;
+    <% end %>
+  }
+  <% end %>
+}

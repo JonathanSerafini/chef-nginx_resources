@@ -1,0 +1,21 @@
+location <%= @configs['uri'] %> {
+  access_log <%= on_off @configs['access_log'] %>;
+  <% Array(@configs['allow']).each do |allow| %>
+  allow <%= allow %>;
+  <% end %>
+  <% Array(@configs['deny']).each do |deny| %>
+  deny <%= deny %>;
+  <% end %>
+  <% if @configs['maintenace_override'] %>
+
+  if (-f <%= @configs['maintenace_override'] %>) {
+    return 503;
+  }
+  <% end %>
+
+  <% if @configs['try_files'] %>
+  try_files <%= @configs['try_files'] %>;
+  <% else %>
+  return 200;
+  <% end %>
+}

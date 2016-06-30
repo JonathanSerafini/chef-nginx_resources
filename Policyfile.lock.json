@@ -1,0 +1,208 @@
+{
+  "revision_id": "ca37700d551fbf37aff214182044b117999f2562c8ea347b4fcfb230297f572b",
+  "name": "nginx_resources",
+  "run_list": [
+    "recipe[nginx_resources::default]"
+  ],
+  "cookbook_locks": {
+    "nginx_resources": {
+      "version": "0.1.0",
+      "identifier": "4e2cb01d38271510c44eec907d756587bb3dc3b9",
+      "dotted_decimal_identifier": "22004183099516693.4719442882755957.111633636377529",
+      "source": ".",
+      "cache_key": null,
+      "scm_info": {
+        "scm": "git",
+        "remote": null,
+        "revision": null,
+        "working_tree_clean": true,
+        "published": false,
+        "synchronized_remote_branches": [
+
+        ]
+      },
+      "source_options": {
+        "path": "."
+      }
+    },
+    "build-essential": {
+      "version": "6.0.0",
+      "identifier": "5b79aed9c0c3bef7665e4754758eac8d3c95fb42",
+      "dotted_decimal_identifier": "25748014765228990.69636874357208462.189722606828354",
+      "cache_key": "build-essential-6.0.0-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/build-essential/versions/6.0.0/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/build-essential/versions/6.0.0/download",
+        "version": "6.0.0"
+      }
+    },
+    "seven_zip": {
+      "version": "2.0.1",
+      "identifier": "1ef062de1bc4cb14e4a78fb739e104eb9508473e",
+      "dotted_decimal_identifier": "8708556725142731.5880907856034273.5409864173374",
+      "cache_key": "seven_zip-2.0.1-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/seven_zip/versions/2.0.1/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/seven_zip/versions/2.0.1/download",
+        "version": "2.0.1"
+      }
+    },
+    "windows": {
+      "version": "1.44.0",
+      "identifier": "f7f7bf67af2da8a0a5bde182e84c78bdb61d769e",
+      "dotted_decimal_identifier": "69796720697879976.45218231224559692.132756199536286",
+      "cache_key": "windows-1.44.0-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/windows/versions/1.44.0/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/windows/versions/1.44.0/download",
+        "version": "1.44.0"
+      }
+    },
+    "chef_handler": {
+      "version": "1.4.0",
+      "identifier": "aa794c0c3a03d09a5e22ca2ffb70115fda923471",
+      "dotted_decimal_identifier": "47984113570415568.43450649927482224.19103386580081",
+      "cache_key": "chef_handler-1.4.0-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/chef_handler/versions/1.4.0/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/chef_handler/versions/1.4.0/download",
+        "version": "1.4.0"
+      }
+    },
+    "mingw": {
+      "version": "1.2.2",
+      "identifier": "f1880a0de48aabca69f318168ce0fc0a56aa7f25",
+      "dotted_decimal_identifier": "67985046151400107.56974438097652960.277121333886757",
+      "cache_key": "mingw-1.2.2-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/mingw/versions/1.2.2/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/mingw/versions/1.2.2/download",
+        "version": "1.2.2"
+      }
+    },
+    "compat_resource": {
+      "version": "12.10.6",
+      "identifier": "e022a20bc148202970f79357916050efa2193cff",
+      "dotted_decimal_identifier": "63088474160449568.11664682676359520.88990146968831",
+      "cache_key": "compat_resource-12.10.6-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/compat_resource/versions/12.10.6/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/compat_resource/versions/12.10.6/download",
+        "version": "12.10.6"
+      }
+    },
+    "apt": {
+      "version": "4.0.1",
+      "identifier": "2bcbf5fe32d4deac130d58f339c61d9337bc7b83",
+      "dotted_decimal_identifier": "12327681390728414.48434644042070470.32518132497283",
+      "cache_key": "apt-4.0.1-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/apt/versions/4.0.1/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/apt/versions/4.0.1/download",
+        "version": "4.0.1"
+      }
+    }
+  },
+  "default_attributes": {
+
+  },
+  "override_attributes": {
+
+  },
+  "solution_dependencies": {
+    "Policyfile": [
+      [
+        "nginx_resources",
+        ">= 0.0.0"
+      ],
+      [
+        "build-essential",
+        "= 6.0.0"
+      ],
+      [
+        "seven_zip",
+        "= 2.0.1"
+      ],
+      [
+        "windows",
+        "= 1.44.0"
+      ],
+      [
+        "chef_handler",
+        "= 1.4.0"
+      ],
+      [
+        "mingw",
+        "= 1.2.2"
+      ],
+      [
+        "compat_resource",
+        "= 12.10.6"
+      ],
+      [
+        "apt",
+        "= 4.0.1"
+      ]
+    ],
+    "dependencies": {
+      "build-essential (6.0.0)": [
+        [
+          "seven_zip",
+          ">= 0.0.0"
+        ],
+        [
+          "mingw",
+          ">= 1.1.0"
+        ],
+        [
+          "compat_resource",
+          ">= 12.10.0"
+        ]
+      ],
+      "seven_zip (2.0.1)": [
+        [
+          "windows",
+          ">= 1.2.2"
+        ]
+      ],
+      "windows (1.44.0)": [
+        [
+          "chef_handler",
+          ">= 0.0.0"
+        ]
+      ],
+      "chef_handler (1.4.0)": [
+
+      ],
+      "mingw (1.2.2)": [
+        [
+          "seven_zip",
+          ">= 0.0.0"
+        ],
+        [
+          "compat_resource",
+          ">= 0.0.0"
+        ]
+      ],
+      "compat_resource (12.10.6)": [
+
+      ],
+      "apt (4.0.1)": [
+        [
+          "compat_resource",
+          ">= 12.10.0"
+        ]
+      ],
+      "nginx_resources (0.1.0)": [
+        [
+          "build-essential",
+          ">= 0.0.0"
+        ],
+        [
+          "apt",
+          ">= 0.0.0"
+        ]
+      ]
+    }
+  }
+}

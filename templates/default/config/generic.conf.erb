@@ -1,0 +1,9 @@
+<% @configs.each do |config_key, config_value| %>
+<% 
+  config_value =  case config_value
+                  when TrueClass, FalseClass then on_off(config_value)
+                  else config_value
+                  end
+%>
+<%= config_key %> <%= config_value %>;
+<% end %>

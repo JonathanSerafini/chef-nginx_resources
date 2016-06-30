@@ -1,0 +1,10 @@
+location = <%= @configs['uri'] || '/nginx_status' %> {
+  <% Array(@configs['allow']).each do |allow| %>
+  allow <%= allow %>;
+  <% end %>
+  <% Array(@configs['deny']).each do |deny| %>
+  deny <%= deny %>;
+  <% end %>
+  stub_status <%= on_off @configs['stub_status'] %>;
+  access_log <%= on_off @configs['access_log'] %>;
+}

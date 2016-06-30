@@ -1,0 +1,34 @@
+# ngx_core_module
+#
+user <%= @user %> <%= @group %>;
+<% if @configs['daemon'] -%>
+daemon <%= on_off @configs['daemon'] %>;
+<% end -%>
+pid <%= @pid %>;
+pcre_jit <%= on_off @configs['pcre_jit'] %>;
+error_log <%= @configs['error_log'] %>;
+
+worker_processes  <%= @configs['worker_processes'] %>;
+<% if @configs['worker_rlimit_nofile'] -%>
+worker_rlimit_nofile <%= @configs['worker_rlimit_nofile'] %>;
+<% end -%>
+
+<% @configs['env'].each do |key,value| %>
+env <%= key %><% if value %>=<%= value %><% end %>;
+<% end %>
+
+include <%= @conf_dir %>/module.d/*.conf;
+
+<% @configs['thread_pool'].each do |name, values| %>
+thread_pool <%= name %> <%= values.map{|k,v| "#{k}=#{v}"}.join(" ") %>;
+<% end %>
+
+events {
+  worker_connections <%= @configs['worker_connections'] %>;
+  multi_accept <%= on_off @configs['multi_accept'] %>;
+}
+
+http {
+  include <%= @conf_dir %>/conf.d/*.conf;
+  include <%= @conf_dir %>/site.d/*.conf;
+}

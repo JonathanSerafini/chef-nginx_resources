@@ -1,0 +1,3 @@
+<% Hash(@configs[:headers]).each do |name, value| %>
+add_header <%= name %> <%= value %>;
+<% end %>

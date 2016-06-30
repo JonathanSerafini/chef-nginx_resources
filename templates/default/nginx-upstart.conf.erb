@@ -1,0 +1,24 @@
+description "nginx http daemon"
+
+start on (local-filesystems and net-device-up IFACE=lo and runlevel [<%= @configs['runlevels'] %>])
+stop on runlevel [!<%= @configs['runlevels'] %>]
+
+env DAEMON=<%= @sbin_path %>
+env PID=<%= @pid_path %>
+env CONFIG=<%= @conf_path %>
+
+respawn
+<% if @configs['respawn_limit'] %>
+respawn limit <%= @configs['respawn_limit'] %>
+<% end %>
+
+pre-start script
+  ${DAEMON} -t
+  if [ $? -ne 0 ]; then
+    exit $?
+  fi
+end script
+
+expect fork
+
+exec ${DAEMON} -c "<%= @conf_path %>"

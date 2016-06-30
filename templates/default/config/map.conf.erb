@@ -1,0 +1,13 @@
+map <%= @configs['from'] %> <%= @configs['to'] %> {
+  <%- if @configs['hostnames'] %>
+  hostnames;
+
+  <% end %>
+  <%- if @configs['default'] %>
+  default <%= @configs['default'] %>;
+
+  <% end %>
+  <% @configs['mappings'].each do |k,v| %>
+  <%= k %> <%= v %>;
+  <% end %>
+}
