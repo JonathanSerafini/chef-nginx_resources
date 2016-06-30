@@ -10,6 +10,7 @@ client_body_temp_path <%= @configs['client_body_temp_path'] %> 1 2;
 
 default_type  <%= @configs['default_type'] %>;
 
+keepalive          <%= on_off @configs['keepalive'] %>;
 keepalive_timeout  <%= @configs['keepalive_timeout'] %>;
 keepalive_requests <%= @configs['keepalive_requests'] %>;
 <% if @configs['log_formats'] %>

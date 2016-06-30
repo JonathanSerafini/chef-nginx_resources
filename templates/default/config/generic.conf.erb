@@ -2,6 +2,8 @@
 <% 
   config_value =  case config_value
                   when TrueClass, FalseClass then on_off(config_value)
+                  when Array then config_value.join(' ')
+                  when Hash then hash_to_s(config_value)
                   else config_value
                   end
 %>
