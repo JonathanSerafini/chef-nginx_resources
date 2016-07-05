@@ -1,29 +1,44 @@
+# Source downloads and unpacks a remove file.
+#
 resource_name :nginx_resources_source
 
+# The version to be compiled
+# @since 0.1.0
 property :version,
   kind_of: String,
   required: true
 
+
+# The checksum of the source archive file
+# @since 0.1.0
 property :checksum,
   kind_of: String,
   required: true,
   desired_state: false
 
+# The URL from which to download the archive file
+# @since 0.1.0
 property :source,
   kind_of: String,
   required: true,
   desired_state: false
 
+# The name of the archive file we have downloaded and stored on disk
+# @since 0.1.0
 property :archive,
   kind_of: String,
   default: lazy { |r| "#{r.name}-#{r.version}.tar.gz" },
   desired_state: false
 
+# The folders to strip after extracting the archive
+# @since 0.1.0
 property :archive_depth,
   kind_of: Integer,
   desired_state: false,
   default: 1
 
+# The path where the archive exists on disk
+# @since 0.1.0
 property :archive_path,
   kind_of: String,
   desired_state: false,
@@ -34,6 +49,8 @@ property :archive_path,
     )
   }
 
+# The path where the archive will be extracted to
+# @since 0.1.0
 property :deploy_path,
   kind_of: String,
   desired_state: false,
@@ -44,6 +61,8 @@ property :deploy_path,
     )
   }
 
+# An optional ruby block to evaluate within the context of this resource.
+# @since 0.1.0
 def hook(&block)
   @hook = block if block_given?
   @hook
@@ -87,7 +106,7 @@ action :delete do
 end
 
 action_class do
-  # chef/chef#4537
+  # Support whyrun
   def whyrun_supported?
     true
   end
