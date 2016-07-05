@@ -1,5 +1,8 @@
 # nginx\_resources cookbook changelog
 
+## v0.1.4
+* Fix copy-paste type in user creation recipe
+
 ## v0.1.2
 * Resolve timing issue with service templates
 * Resolve bug service notification issue due to bug in chef where it errors
