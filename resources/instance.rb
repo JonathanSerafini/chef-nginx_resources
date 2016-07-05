@@ -171,7 +171,7 @@ action :install do
       bool ? "on" : "off"
     end
 
-    notifies :restart, new_resource.service, :delayed
+    notifies :restart, resources(new_resource.service), :delayed
   end
 end
 

@@ -222,7 +222,7 @@ action :install do
         rm #{::File.dirname(new_resource.conf_path)}/*.default
       EOH
     end
-    notifies :restart, new_resource.service, :delayed
+    notifies :restart, resources(new_resource.service), :delayed
   end
 end
 
@@ -233,7 +233,7 @@ action :remove do
       send(prop, value) unless value.nil?
     end
     action  :delete
-    notifies :stop, new_resource.service, :delayed
+    notifies :stop, resources(new_resource.service), :delayed
   end
 
   file new_resource.sbin_path do

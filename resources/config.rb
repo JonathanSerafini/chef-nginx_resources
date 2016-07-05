@@ -141,7 +141,7 @@ action :create do
       end
     end
 
-    notifies :restart, nginx_instance_resource.service, :delayed
+    notifies :restart, resources(nginx_instance_resource.service), :delayed
   end
 
   # Support potentially deleting duplicates when the priority changes
@@ -164,6 +164,7 @@ end
 action :delete do
   file template_path do
     action :delete
+    notifies :restart, resources(nginx_instance_resource.service), :delayed
   end
 end
 

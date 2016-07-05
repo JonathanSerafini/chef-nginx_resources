@@ -31,6 +31,7 @@ Calling the standard `nginx_resources::default` recipe will cause the following 
   - The `nginx_resources_instance[default]` resource is created
   - A few core and override configuration files are created
   - The default site is created and optionally enabled
+  - The service files are created, but not the actual service due to timing
 - `recipes/install_modules` is called
   - We iterate through `node['nginx_resources']['source']['include_recipes']`
     and include recipes listed to install dependencies.
