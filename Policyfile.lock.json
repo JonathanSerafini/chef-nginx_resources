@@ -1,5 +1,5 @@
 {
-  "revision_id": "6ddc5564ac3324312e48f321e89ee7d6ae7fb9bc7feb514625c5669eebcf997a",
+  "revision_id": "e3edd091909162338badf293c3123770623ff2152f7da6b3fb9805d87d9bc589",
   "name": "nginx_resources",
   "run_list": [
     "recipe[nginx_resources::default]"
@@ -7,18 +7,19 @@
   "cookbook_locks": {
     "nginx_resources": {
       "version": "0.1.0",
-      "identifier": "fb5d6746d117a3f6d220019f41ac4d167e20ff65",
-      "dotted_decimal_identifier": "70752917305497507.69473879178822060.84759000711013",
+      "identifier": "980902a7bd2d11633287bad1dd68655b2a559649",
+      "dotted_decimal_identifier": "42794103468797201.27921581230644584.111442226681417",
       "source": ".",
       "cache_key": null,
       "scm_info": {
         "scm": "git",
         "remote": null,
-        "revision": "886fbf9bfa34ed503b1058e40e268e462c5bd115",
-        "working_tree_clean": false,
-        "published": false,
+        "revision": "ea98ca334f7fb992693185fabf7d1de236194258",
+        "working_tree_clean": true,
+        "published": true,
         "synchronized_remote_branches": [
-
+          "origin/develop",
+          "origin/master"
         ]
       },
       "source_options": {
@@ -70,14 +71,25 @@
       }
     },
     "apt": {
-      "version": "3.0.0",
-      "identifier": "ac1a47456c19b9b278abed0ac5e51b05d27f2082",
-      "dotted_decimal_identifier": "48442589403945401.50235225666143717.29711820333186",
-      "cache_key": "apt-3.0.0-supermarket.chef.io",
-      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/apt/versions/3.0.0/download",
+      "version": "4.0.1",
+      "identifier": "2bcbf5fe32d4deac130d58f339c61d9337bc7b83",
+      "dotted_decimal_identifier": "12327681390728414.48434644042070470.32518132497283",
+      "cache_key": "apt-4.0.1-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/apt/versions/4.0.1/download",
       "source_options": {
-        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/apt/versions/3.0.0/download",
-        "version": "3.0.0"
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/apt/versions/4.0.1/download",
+        "version": "4.0.1"
+      }
+    },
+    "compat_resource": {
+      "version": "12.10.6",
+      "identifier": "e022a20bc148202970f79357916050efa2193cff",
+      "dotted_decimal_identifier": "63088474160449568.11664682676359520.88990146968831",
+      "cache_key": "compat_resource-12.10.6-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/compat_resource/versions/12.10.6/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/compat_resource/versions/12.10.6/download",
+        "version": "12.10.6"
       }
     }
   },
@@ -111,7 +123,11 @@
       ],
       [
         "apt",
-        "= 3.0.0"
+        "= 4.0.1"
+      ],
+      [
+        "compat_resource",
+        "= 12.10.6"
       ]
     ],
     "dependencies": {
@@ -122,7 +138,7 @@
         ],
         [
           "apt",
-          "~> 3.0.0"
+          ">= 0.0.0"
         ]
       ],
       "build-essential (2.3.1)": [
@@ -146,7 +162,13 @@
       "chef_handler (1.4.0)": [
 
       ],
-      "apt (3.0.0)": [
+      "apt (4.0.1)": [
+        [
+          "compat_resource",
+          ">= 12.10.0"
+        ]
+      ],
+      "compat_resource (12.10.6)": [
 
       ]
     }
