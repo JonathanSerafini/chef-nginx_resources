@@ -1,0 +1,23 @@
+<%# Generate the paths in proper lua syntax %>
+<%- lua_package_path =  @configs['package_path'].map do |path|
+                          "#{path}/?.lua"
+                        end.join(';')
+    lua_package_cpath = @configs['package_cpath'].map do |path|
+                          "#{path}/?.lua"
+                        end.join(';')
+%>
+lua_package_path  '<%= lua_package_path %>;;';
+lua_package_cpath '<%= lua_package_cpath %>;;';
+
+init_by_lua '
+<% @configs['init']['includes'].each do |package| %>
+  require "<%= package %>"
+<% end %>
+';
+
+init_worker_by_lua '
+<% @configs['init_worker']['includes'].each do |package| %>
+  require "<%= package %>"
+<% end %>
+';
+

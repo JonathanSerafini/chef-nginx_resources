@@ -1,28 +1,46 @@
 
 server {
   server_name <%= @server_name.join("\n    ") %>;
+  <%# listen @listen @listen_params %>
   <% @listen.each do |listen_port| %>
-  listen <%= listen_port %><% if @listen_params %> <%= hash_to_s(@listen_params) %><% end %>;
+  <%= nginx_param('listen', listen_port, 'params' => @listen_params) %>
   <% end %>
+  <%# document root %>
   root <%= @root %>;
+  set $classification <%= @classification || @name %>;
 
-  <% if @configs['ssl_certificate'] %>
-  ssl_certificate <%= @configs['ssl_certificate'] %>;
-  ssl_certificate_key <%= @configs['ssl_certificate_key'] %>;
+  <%# @configs = hash of nginx params %>
+  <% if @configs %>
+  <% @configs.each do |k,v| %>
+  <%= nginx_param(k, v) %>
+  <% end %>
 
   <% end %>
+  <%# @includes = array of configuration fragments to include %>
   <% if @includes.any? %>
   <% @includes.each do |include_path| %>
   include <%= include_path %>;
   <% end %>
 
   <% end %>
-  <% @locations.each do |location_hash| %>
-  location <%= location_hash['path'] %> {
-    try_files <%= location_hash['try_files'] %>;
-    <% Hash(location_hash['configs']).each do |k,v| %>
-    <%= k %> <% v %>;
+  <%# @content = unprocessed user-specified string to insert %>
+  <% if @content %>
+  <%= @content %>
+
+  <% end %>
+  <%# @locations = array of hashes defining location blocks %>
+  <% @locations.each do |hash| %>
+  location <%= hash['uri'] %> {
+    <% Hash(hash['configs']).each do |k,v| %>
+    <%= k %> <%= v %>;
+    <% end %>
+    <% if hash['try_files'] %>
+    try_files <%= hash['try_files'] %>;
+    <% end %>
+    <% if hash['proxy_pass'] %>
+    proxy_pass <%= hash['proxy_pass'] %>;
     <% end %>
   }
+
   <% end %>
 }

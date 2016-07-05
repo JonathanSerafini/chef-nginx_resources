@@ -1,13 +1,13 @@
 map <%= @configs['from'] %> <%= @configs['to'] %> {
-  <%- if @configs['hostnames'] %>
+  <% if @configs['hostnames'] %>
   hostnames;
 
   <% end %>
-  <%- if @configs['default'] %>
-  default <%= @configs['default'] %>;
+  <% if @configs['default'] %>
+  <%= nginx_param('default', @configs['default']) %>
 
   <% end %>
   <% @configs['mappings'].each do |k,v| %>
-  <%= k %> <%= v %>;
+  <%= nginx_param(k, v) %>
   <% end %>
 }

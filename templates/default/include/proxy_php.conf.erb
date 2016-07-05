@@ -1,9 +1,0 @@
-
-location ~\.php {
-  fastcgi_pass <%= @configs['socket_path'] %>;
-}
-
-location @proxy {
-  fastcgi_pass <%= @configs['socket_path'] %>;
-}
-

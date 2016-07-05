@@ -19,23 +19,23 @@ default['nginx_resources']['core']['config'].tap do |config|
 
   config['log_formats']['friendly_syslog'] = %w(
 		$server_name:$server_port
-		-
-		$remote_addr
-		-
-		$upstream_addr
-		-
-		$status
-		-
-		$request_time[$upstream_response_time]
-		-
-		\"$request\""
-		-
-		\"$http_user_agent\" 
+		- $remote_addr
+		- $upstream_addr
+		- $status
+		- $request_time[$upstream_response_time]
+		- \"$request\""
+		- \"$http_user_agent\" 
   ).join(' ')
 
-  config['open_file_cache'] = true
-	config['open_file_cache_max'] = 20000
-  config['open_file_cache_inactive'] = '60s'
+  config['log_formats']['apache'] = %w(
+    $remote_addr - $remote_user [$time_local]
+    \"$request\" $status $body_bytes_sent
+    \"$http_referer\" \"$http_user_agent\"
+    \"$http_cookie\"
+  ).join(' ')
+
+  config['open_file_cache']['max'] = 2000
+  config['open_file_cache']['inactive'] = '60s'
   config['open_file_cache_min_uses'] = 1
   config['open_file_cache_errors'] = 'off'
   config['open_file_cache_valid'] = '60s'

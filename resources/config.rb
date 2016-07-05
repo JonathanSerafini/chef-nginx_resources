@@ -71,13 +71,42 @@ action :create do
       bool ? "on" : "off"
     end
 
-    helper :hash_to_s do |hash|
+    helper :hash_params do |hash|
       hash.map do |k,v|
         if [false,nil].include?(v) then next
         elsif v == true then k
         else "#{k}=#{v}"
         end
       end.join(" ")
+    end
+
+    helper :array_string do |array, delim=','|
+      Array(array).join(delim)
+    end
+
+    helper :nginx_value do |value|
+      value = case value
+              when TrueClass, FalseClass then on_off(value)
+              when Array then array_string(value)
+              when Hash then hash_params(value)
+              else value.to_s
+              end
+      value
+    end
+
+    helper :nginx_param do |name, value, options = {}|
+      options = {
+        'prefix' => nil,
+        'ignore' => nil,
+        'params' => nil
+      }.merge(options)
+
+      unless Array(options['ignore']).include?(name) or value.nil?
+        value = nginx_value(value)
+        value << " #{nginx_value(options['params'])}" if options['params']
+        name  = "#{options['prefix']} #{name}" if options['prefix']
+        "#{name} #{value};"
+      end
     end
 
     notifies :restart, nginx_instance_resource.service, :delayed
@@ -146,7 +175,6 @@ action_class do
   end
 
   def template_variables
-    variables = {}.merge(new_resource.variables)
     variables = {
       'name'      => new_resource.name,
       'pid_dir'   => nginx_instance_resource.pid_dir,

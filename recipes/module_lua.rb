@@ -31,7 +31,6 @@ end
 nginx_resources_config "lua" do
   priority  '30'
   category  'config'
-  source    'config/generic.conf.erb'
   configs    node['nginx_resources']['lua']['config']
 end
 

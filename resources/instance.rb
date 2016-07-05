@@ -1,72 +1,111 @@
+# Instance resource which represents the directory structure of an nginx
+# deployment. Further resources such as Config, Build and Site will depend
+# on this. 
+#
 resource_name :nginx_resources_instance
 
+# The user name under which the service runs
+# @since 0.1.0
 property :user,
   kind_of: String,
   default: lazy { |r| node['nginx_resources']['user'] }
 
+# The group name under which the service runs
+# @since 0.1.0
 property :group,
   kind_of: String,
   default: lazy { |r| node['nginx_resources']['group'] }
 
+# The root directory under which subdirs and files will be created
+# @since 0.1.0
 property :root_dir,
   kind_of: String,
   default: lazy { |r| 
     "#{node['nginx_resources']['root_dir']}/nginx-#{r.name}" 
   }
 
+# The configuration directory
+# @since 0.1.0
 property :conf_dir,
   kind_of: String,
   default: lazy { |r| "#{r.root_dir}/etc" }
 
+# The main configuration file path
+# @since 0.1.0
 property :conf_path,
   kind_of: String,
   default: lazy { |r| "#{r.conf_dir}/nginx.conf" }
 
+# The binary directory
+# @since 0.1.0
 property :sbin_dir,
   kind_of: String,
   default: lazy { |r| "#{r.root_dir}/sbin" }
 
+# The binary file path
+# @since 0.1.0
 property :sbin_path,
   kind_of: String,
   default: lazy { |r| "#{r.sbin_dir}/nginx" }
 
+# The pid directory
+# @since 0.1.0
 property :pid_dir,
   kind_of: String,
   default: lazy { |r| node['nginx_resources']['pid_dir'] }
 
+# The pid file path
+# @since 0.1.0
 property :pid_path,
   kind_of: String,
   default: lazy { |r| "#{r.pid_dir}/nginx-#{r.name}" }
 
+# The temporary file directory
+# @since 0.1.0
 property :spool_dir,
   kind_of: String,
   default: lazy { |r| node['nginx_resources']['spool_dir'] }
 
+# The logging directory
+# @since 0.1.0
 property :log_dir,
   kind_of: String,
   default: lazy { |r| node['nginx_resources']['log_dir'] }
 
+# The group owning the log files (ex.: admin under ubuntu)
+# @since 0.1.0
 property :log_group,
 	kind_of: String,
   default: lazy { |r| node['nginx_resources']['log_group'] }
 
+# The permissions of the logging directory
+# @since 0.1.0
 property :log_dir_perm,
   kind_of: String,
   coerce: proc { |v| v.to_s },
   default: lazy { |r| node['nginx_resources']['log_dir_perm'] }
 
+# The name of the service resource (so that dependant resources can notify)
+# @since 0.1.0
 property :service,
   kind_of: String,
   default: lazy { |r| "service[nginx-#{r.name}]" }
 
+# Source of the main configuration file
+# @since 0.1.0
 property :source,
   kind_of: String,
   default: "nginx.conf.erb"
 
+# Cookbook containing source of the main configuration file
+# @since 0.1.0
 property :cookbook,
   kind_of: String,
   default: "nginx_resources"
 
+# Top level variables referenced by the configuration file and by
+# dependant resources
+# @since 0.1.0
 property :variables,
   kind_of: Hash,
   coerce: proc { |v| 
@@ -77,6 +116,8 @@ property :variables,
   },
   default: Hash.new
 
+# Nginx parameters to add to the configuration file
+# @since 0.1.0
 property :configs,
   kind_of: Hash,
   coerce: proc { |v| 
@@ -86,6 +127,9 @@ property :configs,
     end
   }
 
+# Action which will create the directory structure and main configuration
+# file.
+# @since 0.1.0
 action :install do
   %w(root_dir conf_dir sbin_dir pid_dir).each do |key|
     directory new_resource.send(key) do

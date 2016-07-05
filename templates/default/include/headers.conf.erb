@@ -1,3 +1,3 @@
-<% Hash(@configs[:headers]).each do |name, value| %>
-add_header <%= name %> <%= value %>;
+<% Hash(@configs['add_header']).each do |name, value| %>
+<%= nginx_param(name, value, 'prefix' => 'add_header') %>
 <% end %>

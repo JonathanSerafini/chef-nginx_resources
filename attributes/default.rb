@@ -16,7 +16,7 @@ default['nginx_resources']['log_dir_perm'] = '0750'
 # Default site options
 #
 default['nginx_resources']['site']['listen_params'] = {
-  'reuseport' => true
+  'reuseport' => false
 }
 default['nginx_resources']['site']['includes'] = []
 default['nginx_resources']['site']['default_site'].tap do |config|
@@ -54,6 +54,5 @@ default['nginx_resources']['source']['include_recipes'] = %w(
   nginx_resources::module_stub_status
   nginx_resources::module_fastcgi
   nginx_resources::module_gzip
-  nginx_resources::module_lua
 )
 

@@ -25,6 +25,11 @@ property :prefix,
     "#{r.root_dir}/var/#{r.version}"
   }
 
+property :service,
+  kind_of: String,
+  desired_state: false,
+  required: true
+
 property :checksum,
   kind_of: String,
   desired_state: false,
@@ -137,7 +142,7 @@ action :install do
   end
 
   converge_if_changed do
-    nginx_resources_source new_resource.name do
+    nginx_resources_source "nginx" do
       %w(version checksum source archive archive_depth).each do |prop|
         value = new_resource.send(prop)
         send(prop, value) unless value.nil?
@@ -187,7 +192,7 @@ action :install do
         rm #{::File.dirname(new_resource.conf_path)}/*.default
       EOH
     end
-    notifies :restart, nginx_instance_resource.service, :delayed
+    notifies :restart, new_resource.service, :delayed
   end
 end
 
@@ -198,7 +203,7 @@ action :remove do
       send(prop, value) unless value.nil?
     end
     action  :delete
-    notifies :stop, nginx_instance_resource.service, :delayed
+    notifies :stop, new_resource.service, :delayed
   end
 
   file new_resource.sbin_path do
@@ -217,15 +222,10 @@ end
 
 action_class do
   include Chef::Mixin::ShellOut
-  include NginxResources::Mixin::DiscoveryMethods
 
   # chef/chef#4537
   def whyrun_supported?
     true
-  end
-
-  def nginx_instance_resource(&block)
-    @nginx_instance = find_instance_resource(new_resource.instance, &block)
   end
 
   def build_path

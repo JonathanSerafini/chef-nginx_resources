@@ -1,0 +1,45 @@
+<%#
+# ngx_http_upstream_module
+# http://nginx.org/en/docs/http/ngx_http_upstream_module.html
+# 
+# upstream_name = {
+#   'server' => [
+#     {
+#       'host' => 'ip_or_hostname',
+#       'params' => {
+#         'weight' => 5
+#       }
+#     }
+#   ],
+#   'additional_arg' => 'value'
+# }
+#
+# -----
+#
+# upstream upstream_name {
+#   server ip_or_hostname weight=5;
+#   additional_arg value;
+# }
+#
+# -----
+#
+# proxy_pass http://upstream_name;
+#
+%>
+<% @configs.each do |upstream_name, upstream_config| %>
+upstream <%= upstream_name %> {
+  <% Array(upstream_config['server']).each do |server| %>
+  <%= nginx_param("server", server['host'], 'params' => server['params']) %>
+  <% end %>
+  <% upstream_config.each do |k,v| %>
+  <% next if k == 'server' %>
+  <% if v == true %>
+  <%= k %>;
+  <% elsif v == false then next %>
+  <% else %>
+  <%= nginx_param(k, v) %>
+  <% end %>
+  <% end %>
+}
+<% end %>
+

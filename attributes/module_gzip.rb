@@ -10,18 +10,18 @@ default['nginx_resources']['gzip']['config'].tap do |config|
   config['gzip_min_length'] = 1000
   config['gzip_proxied'] = 'any'
   config['gzip_types'] = %w(
-		text/plain
-		text/css
-		application/x-javascript
-		text/xml
-		application/xml
-		application/rss+xml
-		application/atom+xml
-		text/javascript
-		application/javascript
-		application/json
-		text/mathml
-	)
+    text/plain
+    text/css
+    application/x-javascript
+    text/xml
+    application/xml
+    application/rss+xml
+    application/atom+xml
+    text/javascript
+    application/javascript
+    application/json
+    text/mathml
+  ).join(' ')
   config['gzip_vary'] = 'off'
 end
 

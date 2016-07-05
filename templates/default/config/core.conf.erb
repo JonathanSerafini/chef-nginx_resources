@@ -1,55 +1,9 @@
-
-access_log <%= @configs['access_log'] %>;
-
-client_body_buffer_size <%= @configs['client_body_buffer_size'] %>;
-client_body_timeout <%= @configs['client_body_timeout'] %>;
-client_header_buffer_size <%= @configs['client_header_buffer_size'] %>;
-client_header_timeout <%= @configs['client_header_timeout'] %>;
-client_max_body_size <%= @configs['client_max_body_size'] %>;
-client_body_temp_path <%= @configs['client_body_temp_path'] %> 1 2;
-
-default_type  <%= @configs['default_type'] %>;
-
-keepalive_timeout  <%= @configs['keepalive_timeout'] %>;
-keepalive_requests <%= @configs['keepalive_requests'] %>;
-<% if @configs['log_formats'] %>
-
-<% @configs['log_formats'].each do |name,format| -%>
-log_format <%= name %> <%= format %>;
-<% end -%>
+<% @configs.keys.sort.each do |param_name| %>
+  <% if param_name == 'log_formats' %>
+    <% @configs['log_formats'].each do |format_name,format| %>
+<%= nginx_param(format_name, format, { 'prefix' => 'log_format' }) %>
+    <% end %>
+  <% else %>
+<%= nginx_param(param_name, @configs[param_name]) %>
+  <% end %>
 <% end %>
-
-large_client_header_buffers <%= @configs['large_client_header_buffers'] %>;
-
-<% if @configs['open_file_cache'] %>
-open_file_cache max=<%= @configs['open_file_cache_max'] %> inactive=<%= @configs['open_file_cache_inactive'] %>;
-open_file_cache_valid <%= @configs['open_file_cache_valid'] %>;
-open_file_cache_min_uses <%= @configs['open_file_cache_min_uses'] %>;
-open_file_cache_errors "<%= @configs['open_file_cache_errors'] %>";
-<% else %>
-open_file_cache <%= on_off @configs['open_file_cache'] %>;
-<% end %>
-
-reset_timedout_connection <%= on_off @configs['reset_timedout_connection'] %>;
-resolver <%= @configs['resolver'] %>;
-
-sendfile <%= on_off @configs['sendfile'] %>;
-sendfile_max_chunk <%= @configs['sendfile_max_chunk'] %>;
-
-send_timeout <%= @configs['send_timeout'] %>;
-
-server_names_hash_bucket_size <%= @configs['server_names_hash_bucket_size'] %>;
-server_names_hash_max_size <%= @configs['server_names_hash_max_size'] %>;
-
-server_tokens <%= @configs['server_tokens'].is_a?(String) ? @configs['server_tokens'] : on_off(@configs['server_tokens']) %>;
-
-tcp_nopush <%= on_off @configs['tcp_nopush'] %>;
-tcp_nodelay <%= on_off @configs['tcp_nodelay'] %>;
-
-types_hash_max_size <%= @configs['types_hash_max_size'] %>;
-types_hash_bucket_size <%= @configs['types_hash_bucket_size'] %>;
-
-underscores_in_headers <%= on_off @configs['underscores_in_headers'] %>;
-
-variables_hash_max_size <%= @configs['variables_hash_max_size'] %>;
-variables_hash_bucket_size <%= @configs['variables_hash_bucket_size'] %>;

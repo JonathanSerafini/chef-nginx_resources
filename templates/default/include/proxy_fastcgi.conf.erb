@@ -1,0 +1,9 @@
+<% Array(@configs['fastcgi_extensions']).each do |ext| %>
+location ~\.<%= ext %> {
+  <%= nginx_param('fastcgi_pass', @configs['fastcgi_socket']) %>
+}
+
+<% end %>
+location <%= @configs['fastcgi_location'] || '@proxy' %> {
+  <%= nginx_param('fastcgi_pass', @configs['fastcgi_socket']) %>
+}

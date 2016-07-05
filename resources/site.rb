@@ -22,13 +22,13 @@ property :listen,
 property :listen_params,
   kind_of: Hash,
   default: lazy { |r|
-    node['nginx_resources']['site']['listen_params']
+    node['nginx_resources']['site']['listen_params'].to_hash
   }
 
 property :includes,
   kind_of: Array,
   default: lazy { |r|
-    node['nginx_resources']['site']['includes']
+    node['nginx_resources']['site']['includes'].to_a
   }
 
 property :root,
@@ -39,7 +39,7 @@ property :locations,
   kind_of: Array,
   default: lazy { |r|
     [
-      { 'path' => '/', 'try_files' => %($uri index.htm) }
+      { 'uri' => '/', 'try_files' => %($uri index.htm) }
     ]
   }
 
@@ -88,6 +88,7 @@ action :install do
     source    new_resource.source
     cookbook  new_resource.cookbook
     variables template_variables
+    configs   new_resource.configs
     enabled   new_resource.enabled
   end
 end
@@ -125,7 +126,6 @@ action_class do
       'locations' => new_resource.locations
     }
     variables.merge!(new_resource.variables)
-    variables['configs'] = new_resource.configs
     variables
   end
 end

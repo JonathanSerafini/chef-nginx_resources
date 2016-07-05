@@ -1,5 +1,5 @@
 {
-  "revision_id": "6befb172e70aaba24059a4e44915eb7a4bf9d4644ccd7c77075f2f8fd5fe20d6",
+  "revision_id": "85a4062cd646fd3f0e24afcd272e4a823088e860137ad31232d0e3ef8778ebda",
   "name": "nginx_resources",
   "run_list": [
     "recipe[nginx_resources::default]"
@@ -7,14 +7,14 @@
   "cookbook_locks": {
     "nginx_resources": {
       "version": "0.1.0",
-      "identifier": "ab401374a42e9f8ccf555f0dc1eba2795ede587b",
-      "dotted_decimal_identifier": "48202673322995359.39634462313398763.178642166372475",
+      "identifier": "ce4df58b80822c9140bc6a718dd0c5bb2b9f5144",
+      "dotted_decimal_identifier": "58069562205176364.40885049606901200.217407681417540",
       "source": ".",
       "cache_key": null,
       "scm_info": {
         "scm": "git",
         "remote": null,
-        "revision": "29867c67383cc9fbe1e9938fc182334c13f76673",
+        "revision": "ead688add19ffe82cb6ad7382a822c2423f32c18",
         "working_tree_clean": false,
         "published": false,
         "synchronized_remote_branches": [

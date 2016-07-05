@@ -9,4 +9,18 @@ default['nginx_resources']['lua']['module'].tap do |config|
                           '800e79c43eb37458347d4'
 end
 
-default['nginx_resources']['lua']['config'] = {}
+default['nginx_resources']['lua']['config'].tap do |config|
+  config['package_path'] = %w(
+    /usr/share/lua/5.1
+    /usr/local/share/lua/5.1
+  )
+
+  config['package_cpath'] = %w(
+    /usr/lib/lua/5.1
+    /usr/local/lib/lua/5.1
+    /usr/lib/x86_64-linux-gnu/lua/5.1
+  )
+
+  config['init']['includes'] = %w()
+  config['init_worker']['includes'] = %w()
+end

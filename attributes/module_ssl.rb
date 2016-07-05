@@ -16,7 +16,7 @@ default['nginx_resources']['ssl']['module'].tap do |config|
 end
 
 default['nginx_resources']['ssl']['config'].tap do |config|
-  config['ssl'] = true
+  #config['ssl'] = true
   config['ssl_buffer_size'] = '16k'
   config['ssl_dhparam'] = '/etc/ssl/dhparam.pem'
 	config['ssl_prefer_server_ciphers'] = true
