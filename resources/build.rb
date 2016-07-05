@@ -1,42 +1,60 @@
+# Build resource which downloads and compiles nginx.
+#
 resource_name :nginx_resources_build
 
+# The version to be compiled
+# @since 0.1.0
 property :version,
   kind_of: String,
   default: lazy {
     node['nginx_resources']['source']['version']
   }
 
+# The instance root directory
+# @since 01.0
 property :root_dir,
   kind_of: String,
   desired_state: false,
   required: true
 
+# The path of the nginx binary
+# @since 0.1.0
 property :sbin_path,
   kind_of: String,
   required: true
 
+# The path of the primary configuration file
+# @since 0.1.0
 property :conf_path,
   kind_of: String,
   required: true
 
+# The folder into which nginx is installed
+# @since 0.1.0
 property :prefix,
   kind_of: String,
   default: lazy { |r|
     "#{r.root_dir}/var/#{r.version}"
   }
 
+# The name of the nginx service
+# @since 0.1.0
 property :service,
   kind_of: String,
   desired_state: false,
   required: true
 
+# The checksum of the source archive file
+# @since 0.1.0
 property :checksum,
   kind_of: String,
   desired_state: false,
-  default: lazy { |r|
+  default: lazy {
     node['nginx_resources']['source']['checksum']
   }
 
+# The URL from which to download the archive file
+# @since 0.1.0
 property :source,
   kind_of: String,
   desired_state: false,
@@ -44,6 +62,8 @@ property :source,
     "http://nginx.org/download/nginx-#{r.version}.tar.gz"
   }
 
+# The name of the archive file we have downloaded and stored on disk
+# @since 0.1.0
 property :archive,
   kind_of: String,
   desired_state: false,
@@ -51,11 +71,15 @@ property :archive,
     "nginx-#{r.version}.tar.gz"
   }
 
+# The folders to strip after extracting the archive
+# @since 0.1.0
 property :archive_depth,
   kind_of: Integer,
   desired_state: false,
   default: 1
 
+# Environment variables to define when executing commands
+# @since 0.1.0
 property :environment,
   kind_of: Hash,
   desired_state: false,
@@ -63,36 +87,41 @@ property :environment,
     node['nginx_resources']['source']['environment'].to_hash
   }
 
+# The nginx builtin modules to enable or disable
+# @since 0.1.0
 property :builtin_modules,
   kind_of: Hash,
   default: lazy { |r|
     node['nginx_resources']['source']['builtin_modules'].to_hash
   }
 
+# The nginx external modules to enable. These are generally packages
+# downloaded from third parties.
+# @since 0.1.0
 property :external_modules,
   kind_of: Hash,
   default: lazy { |r|
     node['nginx_resources']['source']['external_modules'].to_hash
   }
 
+# Non-module configure arguments to use when compiling
+# @since 0.1.0
 property :additional_configure_flags,
   kind_of: Array,
   default: lazy { |r|
     node['nginx_resources']['source']['additional_configure_flags'].to_a
   }
 
+# Whether we should force a re-compile of nginx, irrespective of whether 
+# the binary compile options have not changed
+# @since 0.1.0
 property :force_recompile,
   kind_of: [TrueClass, FalseClass],
   default: false
 
-property :supports,
-  kind_of: Hash,
-  desired_state: false,
-  default: { 'download' => true, 'build' => true }
-
+# Determine whether the binary installed matches the desired outcome
+# @since 0.1.0
 load_current_value do |desired|
-  # Ensure that this will be different 
-  #
   force_recompile false
 
   builtin_modules Hash.new
@@ -132,11 +161,12 @@ load_current_value do |desired|
         end
       end
     end
-  end if ::File.exists?(desired.sbin_path)
+  end
 end
 
 action :install do
-  # Lazy isn't evaluating correctly
+  # TODO: Additional investigation needs to be performed regarding this.
+  # Without the following block, Lazy{} does not seem to evaluate correctly.
   new_resource.class.state_properties.each do |p|
     new_resource.send(p.name)
   end
@@ -221,13 +251,15 @@ action :remove do
 end
 
 action_class do
+  # Include the shell_out! helper
   include Chef::Mixin::ShellOut
 
-  # chef/chef#4537
+  # Support whyrun
   def whyrun_supported?
     true
   end
 
+  # The path where the source resides
   def build_path
     "#{Chef::Config['file_cache_path']}/nginx-#{new_resource.version}"
   end

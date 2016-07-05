@@ -1,28 +1,44 @@
+# Module resource wraps Source and Config to ensure that we download source
+# tarballs, unpack them, update node attributes for module loading as well as 
+# add the module configuration file to an instance. 
+#
 resource_name :nginx_resources_module
 
+# Name of the nginx_resources_instance resource which this belongs to
+# @since 0.1.0
 property :instance,
   kind_of: String,
   default: "default"
 
+# A priority prefix for the configurtion path in order to load in order
+# @since 0.1.0
 property :priority,
   kind_of: String,
   coerce: proc { |v| v.to_s },
   default: "50"
 
+# The version to be compiled
+# @since 0.1.0
 property :version,
   kind_of: String,
   required: true
 
+# The checksum of the source archive file
+# @since 0.1.0
 property :checksum,
   kind_of: String,
   required: true,
   desired_state: false
 
+# The URL from which to download the archive file
+# @since 0.1.0
 property :source,
   kind_of: String,
   required: true,
   desired_state: false
 
+# Pack to the module .so file used in the configuration file
+# @since 0.1.0
 property :module_path,
   kind_of: String,
   coerce: proc { |v|
@@ -38,18 +54,27 @@ property :module_path,
     v
   }
 
+# The name of the archive file we have downloaded and stored on disk
+# @since 0.1.0
 property :archive,
   kind_of: String,
   desired_state: false
 
+# The folders to strip after extracting the archive
+# @since 0.1.0
 property :archive_depth,
   kind_of: Integer,
   desired_state: false
 
+# Whether nginx should load this configuration file automatically or not. The
+# provider will ensure to remove the .conf suffix when not enabled.
+# @since 0.1.0
 property :enabled,
   kind_of: [TrueClass, FalseClass],
   default: true
 
+# An optional ruby block to evaluate within the context of this resource.
+# @since 0.1.0
 def hook(&block)
   @hook = block if block_given?
   @hook
@@ -105,7 +130,7 @@ action :delete do
 end
 
 action_class do
-  # chef/chef#4537
+  # Support whyrun
   def whyrun_supported?
     true
   end
