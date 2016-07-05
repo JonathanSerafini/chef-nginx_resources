@@ -7,7 +7,7 @@ license 'apachev2'
 description 'Cookbook to install nginx with resources'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 chef_version '>= 12.7'
-version '0.1.1'
+version '0.1.2'
 
 depends 'build-essential', '~> 2.3.0'
 depends 'apt'#, '~> 3.0.0'
