@@ -2,6 +2,7 @@
 
 ## v0.1.4
 * Fix copy-paste type in user creation recipe
+* Streamline service definition
 
 ## v0.1.2
 * Resolve timing issue with service templates
