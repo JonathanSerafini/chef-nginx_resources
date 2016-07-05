@@ -20,7 +20,11 @@ if node['nginx_resources']['service']['managed']
     service 'nginx' do
       provider Chef::Provider::Service::Upstart
       supports :status => true, :restart => true, :reload => true
-      action :start
+      if node['nginx_resources']['service']['should_start']
+        action :start
+      else
+        action :nothing
+      end
     end
   end
 end

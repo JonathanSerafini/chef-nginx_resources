@@ -32,6 +32,7 @@ end
 default['nginx_resources']['service']['name'] = "service[nginx]"
 default['nginx_resources']['service']['managed'] = true
 default['nginx_resources']['service']['init_style'] = 'upstart'
+default['nginx_resources']['service']['should_start'] = true
 
 default['nginx_resources']['upstart']['runlevels'] = '2345'
 default['nginx_resources']['upstart']['respawn_limit'] = nil
