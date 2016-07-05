@@ -1,11 +1,13 @@
 name 'nginx_resources'
-maintainer 'The Authors'
-maintainer_email 'you@example.com'
-license 'all_rights'
-description 'Installs/Configures nginx_resources'
-long_description 'Installs/Configures nginx_resources'
+maintainer 'Jonathan Serafini'
+maintainer_email 'jonathan@serafini.ca'
+issues_url 'https://github.com/JonathanSerafini/chef-nginx_resources/issues'
+source_url 'https://github.com/JonathanSerafini/chef-nginx_resources'
+license 'apachev2'
+description 'Cookbook to install nginx with resources'
+long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
+chef_version '>= 12.7'
 version '0.1.0'
-depends 'build-essential'
 
-
-depends 'apt'
+depends 'build-essential', '~> 2.3.0'
+depends 'apt', '~> 3.0.0'
