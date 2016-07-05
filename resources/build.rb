@@ -11,7 +11,7 @@ property :version,
   }
 
 # The instance root directory
-# @since 01.0
+# @since 0.1.0
 property :root_dir,
   kind_of: String,
   desired_state: false,
