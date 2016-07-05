@@ -10,4 +10,4 @@ chef_version '>= 12.7'
 version '0.1.0'
 
 depends 'build-essential', '~> 2.3.0'
-depends 'apt', '~> 3.0.0'
+depends 'apt'#, '~> 3.0.0'
