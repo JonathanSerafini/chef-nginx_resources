@@ -54,12 +54,12 @@ end
 # Optionally generate a dhparam.pem hash file to provide better security with
 # strong certificates.
 #
-bash "generate_dhparam" do
+bash 'generate_dhparam' do
   code <<-EOH
     openssl dhparam -dsaparam -out /etc/ssl/dhparam.pem 4096
   EOH
   not_if do
-    ::File.exists?("/etc/ssl/dhparam.pem")
+    ::File.exists?('/etc/ssl/dhparam.pem')
   end
   only_if do
     node['nginx_resources']['ssl']['generate_dhparam']

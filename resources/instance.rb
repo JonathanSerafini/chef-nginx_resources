@@ -95,13 +95,13 @@ property :service,
 # @since 0.1.0
 property :source,
   kind_of: String,
-  default: "nginx.conf.erb"
+  default: 'nginx.conf.erb'
 
 # Cookbook containing source of the main configuration file
 # @since 0.1.0
 property :cookbook,
   kind_of: String,
-  default: "nginx_resources"
+  default: 'nginx_resources'
 
 # Top level variables referenced by the configuration file and by
 # dependant resources
@@ -168,7 +168,7 @@ action :install do
     variables template_variables
 
     helper(:on_off) do |bool|
-      bool ? "on" : "off"
+      bool ? 'on' : 'off'
     end
 
     notifies :restart, resources(new_resource.service), :delayed

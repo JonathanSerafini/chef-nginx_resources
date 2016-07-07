@@ -1,6 +1,6 @@
 # Include required module
 #
-include_recipe "nginx_resources::module_ndk"
+include_recipe 'nginx_resources::module_ndk'
 
 # Install package dependencies
 #
@@ -28,7 +28,7 @@ nginx_resources_module 'module_lua' do
   source    node['nginx_resources']['lua']['module']['source']
 end
 
-nginx_resources_config "lua" do
+nginx_resources_config 'lua' do
   priority  '30'
   category  'config'
   configs    node['nginx_resources']['lua']['config']

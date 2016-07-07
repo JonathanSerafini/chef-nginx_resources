@@ -58,7 +58,7 @@ template 'nginx_service' do
   when 'upstart'
     path    '/etc/init/nginx.conf'
     source  'nginx-upstart.conf.erb'
-  else raise NotImplementedError.new("the nginx init_style is not supported")
+  else raise NotImplementedError.new('the nginx init_style is not supported')
   end
 
   only_if do

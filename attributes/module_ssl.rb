@@ -84,5 +84,5 @@ default['nginx_resources']['ssl']['config'].tap do |config|
   	!RC4
 	))
 
-	config['ssl_ciphers'] = supported_ciphers.uniq.join(":")
+	config['ssl_ciphers'] = supported_ciphers.uniq.join(':')
 end

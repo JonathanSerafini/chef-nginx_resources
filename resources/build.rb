@@ -153,9 +153,9 @@ load_current_value do |desired|
         when /^--without-(.*)/
           builtin_modules[$1] = false
         when /^--add-module=(.*)/
-          external_modules[$1] = "static"
+          external_modules[$1] = 'static'
         when /^--add-dynamic-module=(.*)/
-          external_modules[$1] = "dynamic"
+          external_modules[$1] = 'dynamic'
         else
           additional_configure_flags << $1
         end
@@ -172,7 +172,7 @@ action :install do
   end
 
   converge_if_changed do
-    nginx_resources_source "nginx" do
+    nginx_resources_source 'nginx' do
       %w(version checksum source archive archive_depth).each do |prop|
         value = new_resource.send(prop)
         send(prop, value) unless value.nil?
@@ -276,8 +276,8 @@ action_class do
   def external_module_flags
     new_resource.external_modules.map do |path, category|
       case category.to_s
-      when "dynamic" then "--add-dynamic-module=#{path}"
-      when "static" then "--add-module=#{path}"
+      when 'dynamic' then "--add-dynamic-module=#{path}"
+      when 'static' then "--add-module=#{path}"
       end
     end.sort
   end

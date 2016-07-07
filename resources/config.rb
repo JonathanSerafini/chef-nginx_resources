@@ -6,7 +6,7 @@ resource_name :nginx_resources_config
 # @since 0.1.0
 property :instance,
   kind_of: String,
-  default: "default"
+  default: 'default'
 
 # A priority prefix for the configurtion path in order to load in order
 # @since 0.1.0
@@ -16,7 +16,7 @@ property :priority,
   default: lazy { |r|
     case r.category
     when 'include' then nil
-    else "50"
+    else '50'
     end
   }
 
@@ -39,7 +39,7 @@ property :filename,
 # @since 0.1.0
 property :cookbook,
   kind_of: String,
-  default: "nginx_resources"
+  default: 'nginx_resources'
 
 # Path to the template source file
 # @since 0.1.0
@@ -96,7 +96,7 @@ action :create do
 
     # A helper method to convert a boolean to on/off
     helper :on_off do |bool|
-      bool ? "on" : "off"
+      bool ? 'on' : 'off'
     end
 
     # A helper method to convert a hash into a string of key=value
@@ -106,7 +106,7 @@ action :create do
         elsif v == true then k
         else "#{k}=#{v}"
         end
-      end.join(" ")
+      end.join(' ')
     end
 
     # A helper method to join arrays to a string
