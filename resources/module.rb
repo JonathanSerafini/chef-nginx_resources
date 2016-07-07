@@ -99,7 +99,9 @@ action :install do
     source    "module/generic.conf.erb"
     variables template_variables
     enabled   new_resource.enabled
-    only_if { new_resource.module_path }
+    only_if do
+      new_resource.module_path
+    end
   end
 
   node.default['nginx_resources']['source'].tap do |source_attr|

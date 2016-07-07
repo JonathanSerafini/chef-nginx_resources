@@ -61,5 +61,7 @@ template 'nginx_service' do
   else raise NotImplementedError.new("the nginx init_style is not supported")
   end
 
-  only_if { node['nginx_resources']['service']['managed'] }
+  only_if do
+    node['nginx_resources']['service']['managed']
+  end
 end

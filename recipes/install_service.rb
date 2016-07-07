@@ -17,6 +17,8 @@ service 'nginx' do
           else :nothing
           end
 
-  only_if { node['nginx_resources']['service']['managed'] }
+  only_if do
+    node['nginx_resources']['service']['managed']
+  end
 end
 
