@@ -1,24 +1,24 @@
 {
-  "revision_id": "89d8a7297cdf67b35297679d9069a0e2a4f88f797f6e9e0281cca470c4241c60",
+  "revision_id": "1b3bc73e219d4688037503ed6fecf937a409f47cdbc1e8b4e2dde81fd0ae0ce5",
   "name": "nginx_resources",
   "run_list": [
     "recipe[nginx_resources::default]"
   ],
   "cookbook_locks": {
     "nginx_resources": {
-      "version": "0.1.1",
-      "identifier": "6fa992839e91b486895f2c4203aaca2a3403ee8d",
-      "dotted_decimal_identifier": "31430169153409460.37868688736650154.222282610110093",
+      "version": "0.2.0",
+      "identifier": "da6328cad1ab9942a9938eeb1ff1413fd77689fd",
+      "dotted_decimal_identifier": "61470571775503257.18763799685963761.71742453615101",
       "source": ".",
       "cache_key": null,
       "scm_info": {
         "scm": "git",
-        "remote": null,
-        "revision": "8b35ab610d53f9d9fc7e7d1277673557800e35c5",
-        "working_tree_clean": false,
-        "published": true,
+        "remote": "git@github.com:JonathanSerafini/chef-nginx_resources.git",
+        "revision": "11202035ce73e72f8607cbcf45fdcd5bbce897a0",
+        "working_tree_clean": true,
+        "published": false,
         "synchronized_remote_branches": [
-          "origin/develop"
+
         ]
       },
       "source_options": {
@@ -130,6 +130,16 @@
       ]
     ],
     "dependencies": {
+      "nginx_resources (0.2.0)": [
+        [
+          "build-essential",
+          "~> 2.3.0"
+        ],
+        [
+          "apt",
+          ">= 0.0.0"
+        ]
+      ],
       "build-essential (2.3.1)": [
         [
           "7-zip",
@@ -159,16 +169,6 @@
       ],
       "compat_resource (12.10.6)": [
 
-      ],
-      "nginx_resources (0.1.1)": [
-        [
-          "build-essential",
-          "~> 2.3.0"
-        ],
-        [
-          "apt",
-          ">= 0.0.0"
-        ]
       ]
     }
   }

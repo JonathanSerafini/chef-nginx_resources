@@ -1,0 +1,31 @@
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'spec/**/*'
+    - 'test/**/*'
+    - 'tmp/**/*'
+  TargetRubyVersion: 1.9
+
+Style/AlignParameters:
+  Exclude:
+    - 'resources/build.rb'
+    - 'resources/config.rb'
+    - 'resources/instance.rb'
+    - 'resources/module.rb'
+    - 'resources/site.rb'
+    - 'resources/source.rb'
+
+Style/Encoding:
+  Enabled: false
+
+Style/FileName:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/RegexpLiteral:
+  Exclude:
+    - 'resources/build.rb'
+    - 'resources/module.rb'
+

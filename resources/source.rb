@@ -8,7 +8,6 @@ property :version,
   kind_of: String,
   required: true
 
-
 # The checksum of the source archive file
 # @since 0.1.0
 property :checksum,
@@ -89,9 +88,7 @@ action :install do
     end
   end
 
-  if hook
-    recipe_eval(&hook)
-  end
+  recipe_eval(&hook) if hook
 end
 
 action :delete do
@@ -111,4 +108,3 @@ action_class do
     true
   end
 end
-

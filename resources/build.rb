@@ -67,7 +67,7 @@ property :source,
 property :archive,
   kind_of: String,
   desired_state: false,
-  default: lazy { |r| 
+  default: lazy { |r|
     "nginx-#{r.version}.tar.gz"
   }
 
@@ -83,7 +83,7 @@ property :archive_depth,
 property :environment,
   kind_of: Hash,
   desired_state: false,
-  default: lazy { |r|
+  default: lazy { |_r|
     node['nginx_resources']['source']['environment'].to_hash
   }
 
@@ -91,7 +91,7 @@ property :environment,
 # @since 0.1.0
 property :builtin_modules,
   kind_of: Hash,
-  default: lazy { |r|
+  default: lazy { |_r|
     node['nginx_resources']['source']['builtin_modules'].to_hash
   }
 
@@ -100,7 +100,7 @@ property :builtin_modules,
 # @since 0.1.0
 property :external_modules,
   kind_of: Hash,
-  default: lazy { |r|
+  default: lazy { |_r|
     node['nginx_resources']['source']['external_modules'].to_hash
   }
 
@@ -108,11 +108,11 @@ property :external_modules,
 # @since 0.1.0
 property :additional_configure_flags,
   kind_of: Array,
-  default: lazy { |r|
+  default: lazy { |_r|
     node['nginx_resources']['source']['additional_configure_flags'].to_a
   }
 
-# Whether we should force a re-compile of nginx, irrespective of whether 
+# Whether we should force a re-compile of nginx, irrespective of whether
 # the binary compile options have not changed
 # @since 0.1.0
 property :force_recompile,
@@ -124,40 +124,38 @@ property :force_recompile,
 load_current_value do |desired|
   force_recompile false
 
-  builtin_modules Hash.new
-  external_modules Hash.new
-  additional_configure_flags Array.new
+  builtin_modules {}
+  external_modules {}
+  additional_configure_flags []
 
-  unless ::File.exists?(desired.sbin_path)
-    current_value_does_not_exist!
-  end
+  current_value_does_not_exist! ::File.exist?(desired.sbin_path)
 
   shell_out!("#{desired.sbin_path} -V").stderr.each_line do |line|
     case line
-    when /^nginx version: nginx\/(.*)\n$/
-      version $1
-    when /^configure arguments: (.*)\n$/
-      configure_arguments = $1.split(' ')
+    when /^nginx version: nginx\/(?<match>.*)\n$/
+      version match
+    when /^configure arguments: (?<match>.*)\n$/
+      configure_arguments = match.split(' ')
       configure_arguments.each do |argument|
         case argument
-        when /^--prefix=(.*)/
-          prefix $1
-        when /^--conf-path=(.*)/
-          conf_path $1
-        when /^--sbin-path=(.*)/
-          sbin_path $1
-        when /^(--with-.*=.*)/
-          additional_configure_flags << $1
-        when /^--with-([^=]*)/
-          builtin_modules[$1] = true
-        when /^--without-(.*)/
-          builtin_modules[$1] = false
-        when /^--add-module=(.*)/
-          external_modules[$1] = "static"
-        when /^--add-dynamic-module=(.*)/
-          external_modules[$1] = "dynamic"
+        when /^--prefix=(?<match>.*)/
+          prefix match
+        when /^--conf-path=(?<match>.*)/
+          conf_path match
+        when /^--sbin-path=(?<match>.*)/
+          sbin_path match
+        when /^(?<match>--with-.*=.*)/
+          additional_configure_flags << match
+        when /^--with-(?<match>[^=]*)/
+          builtin_modules[match] = true
+        when /^--without-(?<match>.*)/
+          builtin_modules[match] = false
+        when /^--add-module=(?<match>.*)/
+          external_modules[match] = 'static'
+        when /^--add-dynamic-module=(?<match>.*)/
+          external_modules[match] = 'dynamic'
         else
-          additional_configure_flags << $1
+          additional_configure_flags << match
         end
       end
     end
@@ -172,7 +170,7 @@ action :install do
   end
 
   converge_if_changed do
-    nginx_resources_source "nginx" do
+    nginx_resources_source 'nginx' do
       %w(version checksum source archive archive_depth).each do |prop|
         value = new_resource.send(prop)
         send(prop, value) unless value.nil?
@@ -191,26 +189,26 @@ action :install do
   converge_if_changed :version,
     :additional_configure_flags,
     :force_recompile do
-      bash 'make_binary' do
-        environment new_resource.environment
-        cwd build_path
-        code <<-EOH
-          make -f objs/Makefile binary manpage
-        EOH
-      end
+    bash 'make_binary' do
+      environment new_resource.environment
+      cwd build_path
+      code <<-EOH
+        make -f objs/Makefile binary manpage
+      EOH
+    end
   end
 
   converge_if_changed :version,
     :builtin_modules,
     :external_modules,
     :force_recompile do
-      bash 'make_modules' do
-        environment new_resource.environment
-        cwd build_path
-        code <<-EOH
-          make -f objs/Makefile modules
-        EOH
-      end
+    bash 'make_modules' do
+      environment new_resource.environment
+      cwd build_path
+      code <<-EOH
+        make -f objs/Makefile modules
+      EOH
+    end
   end
 
   converge_if_changed do
@@ -232,7 +230,7 @@ action :remove do
       value = new_resource.send(prop)
       send(prop, value) unless value.nil?
     end
-    action  :delete
+    action :delete
     notifies :stop, resources(new_resource.service), :delayed
   end
 
@@ -276,22 +274,22 @@ action_class do
   def external_module_flags
     new_resource.external_modules.map do |path, category|
       case category.to_s
-      when "dynamic" then "--add-dynamic-module=#{path}"
-      when "static" then "--add-module=#{path}"
+      when 'dynamic' then "--add-dynamic-module=#{path}"
+      when 'static' then "--add-module=#{path}"
       end
     end.sort
   end
 
   def configure_flags
-    [ 
+    [
       "--prefix=#{new_resource.prefix}",
       "--conf-path=#{new_resource.conf_path}",
       "--sbin-path=#{new_resource.sbin_path}"
-    ].
-    concat(new_resource.additional_configure_flags).
-    concat(builtin_module_flags).
-    concat(external_module_flags).
-    uniq.
-    sort
+    ]
+      .concat(new_resource.additional_configure_flags)
+      .concat(builtin_module_flags)
+      .concat(external_module_flags)
+      .uniq
+      .sort
   end
 end

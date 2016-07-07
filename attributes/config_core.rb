@@ -18,13 +18,13 @@ default['nginx_resources']['core']['config'].tap do |config|
   config['large_client_header_buffers'] = '4 8k'
 
   config['log_formats']['friendly_syslog'] = %w(
-		$server_name:$server_port
-		- $remote_addr
-		- $upstream_addr
-		- $status
-		- $request_time[$upstream_response_time]
-		- \"$request\""
-		- \"$http_user_agent\" 
+    $server_name:$server_port
+    - $remote_addr
+    - $upstream_addr
+    - $status
+    - $request_time[$upstream_response_time]
+    - \"$request\""
+    - \"$http_user_agent\"
   ).join(' ')
 
   config['log_formats']['apache'] = %w(
@@ -55,13 +55,12 @@ default['nginx_resources']['core']['config'].tap do |config|
 
   config['tcp_nopush'] = true
   config['tcp_nodelay'] = true
-  
+
   config['types_hash_bucket_size'] = 64
   config['types_hash_max_size'] = 2048
-  
+
   config['underscores_in_headers'] = false
 
   config['variables_hash_bucket_size'] = 64
   config['variables_hash_max_size'] = 1024
 end
-

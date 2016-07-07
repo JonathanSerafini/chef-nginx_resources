@@ -1,18 +1,22 @@
 # Deploy the nginx service
 #
-if node['nginx_resources']['service']['managed']
-  instance = resources("nginx_resources_instance[default]")
+init_style = node['nginx_resources']['service']['init_style']
 
-  case node['nginx_resources']['service']['init_style']
+service 'nginx' do
+  case init_style
   when 'upstart'
-    service 'nginx' do
-      provider Chef::Provider::Service::Upstart
-      supports :status => true, :restart => true, :reload => true
-      if node['nginx_resources']['service']['should_start']
-        action :start
-      else
-        action :nothing
-      end
-    end
+    provider Chef::Provider::Service::Upstart
+  else raise NotImplementedError, 'the nginx init_style is not supported'
+  end
+
+  supports status: true, restart: true, reload: true
+
+  action  case node['nginx_resources']['service']['should_start']
+          when true then :start
+          else :nothing
+          end
+
+  only_if do
+    node['nginx_resources']['service']['managed']
   end
 end

@@ -1,7 +1,7 @@
 # Install dev dependencies
 #
-include_recipe "apt::default"
-include_recipe "build-essential::default"
+include_recipe 'apt::default'
+include_recipe 'build-essential::default'
 
 packages = value_for_platform_family(
   %w(rhel fedora suse) => %w(pcre-devel),
@@ -15,7 +15,7 @@ end
 
 # Build nginx from source
 #
-instance = resources("nginx_resources_instance[default]")
+instance = resources('nginx_resources_instance[default]')
 
 nginx_resources_build 'default' do
   root_dir  instance.root_dir

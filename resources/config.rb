@@ -6,26 +6,26 @@ resource_name :nginx_resources_config
 # @since 0.1.0
 property :instance,
   kind_of: String,
-  default: "default"
+  default: 'default'
 
 # A priority prefix for the configurtion path in order to load in order
 # @since 0.1.0
 property :priority,
-  kind_of: [NilClass,String],
+  kind_of: [NilClass, String],
   coerce: proc { |v| v.to_s unless v.nil? },
   default: lazy { |r|
     case r.category
     when 'include' then nil
-    else "50"
+    else '50'
     end
   }
 
-# The etc subfolder into which to install. This is also used to organize the 
+# The etc subfolder into which to install. This is also used to organize the
 # template source files.
 # @since 0.1.0
 property :category,
   kind_of: String,
-  equal_to: ['config', 'module', 'include', 'site'],
+  equal_to: %w(config module include site),
   required: true
 
 # Name of the configuration file without priority prefix
@@ -39,7 +39,7 @@ property :filename,
 # @since 0.1.0
 property :cookbook,
   kind_of: String,
-  default: "nginx_resources"
+  default: 'nginx_resources'
 
 # Path to the template source file
 # @since 0.1.0
@@ -61,30 +61,30 @@ property :enabled,
   default: true
 
 # Template variables to provide. Generally used to provide configurations
-# other than nginx parameters and which will automatically have the 
+# other than nginx parameters and which will automatically have the
 # nginx_resources_instances paths injected.
 # @since 0.1.0
 property :variables,
   kind_of: Hash,
-  coerce: proc { |v| 
+  coerce: proc { |v|
     case v
     when Chef::Node::ImmutableMash then v.to_hash
     else v
     end
   },
-  default: Hash.new
+  default: {}
 
 # Template nginx parameters to provide as variables under the `configs` hash.
 # @since 0.1.0
 property :configs,
   kind_of: Hash,
-  coerce: proc { |v| 
+  coerce: proc { |v|
     case v
     when Chef::Node::ImmutableMash then v.to_hash
     else v
     end
   },
-  default: Hash.new
+  default: {}
 
 action :create do
   # Configuration file template
@@ -96,21 +96,22 @@ action :create do
 
     # A helper method to convert a boolean to on/off
     helper :on_off do |bool|
-      bool ? "on" : "off"
+      bool ? 'on' : 'off'
     end
 
     # A helper method to convert a hash into a string of key=value
+    # rubocop:disable Style/GuardClause
     helper :hash_params do |hash|
-      hash.map do |k,v|
-        if [false,nil].include?(v) then next
+      hash.map do |k, v|
+        if [false, nil].include?(v) then next
         elsif v == true then k
         else "#{k}=#{v}"
         end
-      end.join(" ")
+      end.join(' ')
     end
 
     # A helper method to join arrays to a string
-    helper :array_string do |array, delim=','|
+    helper :array_string do |array, delim = ','|
       Array(array).join(delim)
     end
 
@@ -133,21 +134,21 @@ action :create do
         'params' => nil
       }.merge(options)
 
-      unless Array(options['ignore']).include?(name) or value.nil?
+      unless Array(options['ignore']).include?(name) || value.nil?
         value = nginx_value(value)
         value << " #{nginx_value(options['params'])}" if options['params']
-        name  = "#{options['prefix']} #{name}" if options['prefix']
+        name = "#{options['prefix']} #{name}" if options['prefix']
         "#{name} #{value};"
       end
     end
 
-    notifies :restart, resources(nginx_instance_resource.service), :delayed
+    notifies :reload, resources(nginx_instance_resource.service), :delayed
   end
 
   # Support potentially deleting duplicates when the priority changes
   duplicates = []
-  duplicates.concat(::Dir.glob(template_enabled_path('*')))  
-  duplicates.concat(::Dir.glob(template_available_path('*')))  
+  duplicates.concat(::Dir.glob(template_enabled_path('*')))
+  duplicates.concat(::Dir.glob(template_available_path('*')))
   duplicates.delete(template_path)
 
   if duplicates.count > 1
@@ -160,11 +161,11 @@ action :create do
     end
   end
 end
-  
+
 action :delete do
   file template_path do
     action :delete
-    notifies :restart, resources(nginx_instance_resource.service), :delayed
+    notifies :reload, resources(nginx_instance_resource.service), :delayed
   end
 end
 
@@ -205,13 +206,14 @@ action_class do
   end
 
   def template_available_path(prefix = nil)
-    template_enabled_path(prefix).sub(/\.conf$/,'')
+    template_enabled_path(prefix).sub(/\.conf$/, '')
   end
 
   def template_path
     new_resource.enabled ? template_enabled_path : template_available_path
   end
 
+  # rubocop:disable Metrics/AbcSize
   def template_variables
     variables = {
       'name'      => new_resource.name,
@@ -225,4 +227,3 @@ action_class do
     variables
   end
 end
-

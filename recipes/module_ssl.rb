@@ -30,36 +30,36 @@ end
 
 # SSL configuration directives
 #
-config = nginx_resources_config 'ssl' do
+nginx_resources_config 'ssl' do
   category  'config'
   source    'config/generic.conf.erb'
-  configs    node['nginx_resources']['ssl']['config']
+  configs node['nginx_resources']['ssl']['config']
 end
 
-# Map to create the x_forwarded_https variable, which may be used when 
+# Map to create the x_forwarded_https variable, which may be used when
 # proxying to ensure that backend servers know SSL was terminated on the
 # proxy.
 #
 nginx_resources_config 'ssl_map' do
   category 'config'
   source   'config/map.conf.erb'
-  configs  'from' => '$scheme', 
+  configs  'from' => '$scheme',
            'to' => '$x_forwarded_https',
            'mappings' => {
              'http' => false,
              'https' => true
-            }
+           }
 end
 
 # Optionally generate a dhparam.pem hash file to provide better security with
 # strong certificates.
 #
-bash "generate_dhparam" do
+bash 'generate_dhparam' do
   code <<-EOH
     openssl dhparam -dsaparam -out /etc/ssl/dhparam.pem 4096
   EOH
   not_if do
-    ::File.exists?("/etc/ssl/dhparam.pem")
+    ::File.exist?('/etc/ssl/dhparam.pem')
   end
   only_if do
     node['nginx_resources']['ssl']['generate_dhparam']
@@ -71,4 +71,3 @@ end
 node.default['nginx_resources']['source'].tap do |source_attr|
   source_attr['builtin_modules']['http_ssl_module'] = true
 end
-

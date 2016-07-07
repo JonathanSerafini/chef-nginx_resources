@@ -18,4 +18,3 @@ default['nginx_resources']['proxy_headers']['config'].tap do |config|
     header['X-Forwarded-Https'] = '$x_forwarded_https'
   end
 end
-

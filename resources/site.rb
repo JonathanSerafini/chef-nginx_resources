@@ -34,7 +34,7 @@ property :listen,
 # @since 0.1.0
 property :listen_params,
   kind_of: Hash,
-  default: lazy { |r|
+  default: lazy {
     node['nginx_resources']['site']['listen_params'].to_hash
   }
 
@@ -42,7 +42,7 @@ property :listen_params,
 # @since 0.1.0
 property :includes,
   kind_of: Array,
-  default: lazy { |r|
+  default: lazy {
     node['nginx_resources']['site']['includes'].to_a
   }
 
@@ -53,7 +53,7 @@ property :root,
   required: true
 
 # Array of Hashes defining nginx location blocks
-# The hashes support the following keys: 
+# The hashes support the following keys:
 # - uri: The name and path of the location
 # - try_files: Nginx try_files statement
 # - proxy_pass: Nginx proxy_pass statement
@@ -61,7 +61,7 @@ property :root,
 # @since 0.1.0
 property :locations,
   kind_of: Array,
-  default: lazy { |r|
+  default: lazy {
     [
       { 'uri' => '/', 'try_files' => %($uri index.htm) }
     ]
@@ -71,25 +71,25 @@ property :locations,
 # @since 0.1.0
 property :configs,
   kind_of: Hash,
-  coerce: proc { |v| 
+  coerce: proc { |v|
     case v
     when Chef::Node::ImmutableMash then v.to_hash
     else v
     end
   },
-  default: Hash.new
+  default: {}
 
 # Additional variables that are not nginx parameters
 # @since 0.1.0
 property :variables,
   kind_of: Hash,
-  coerce: proc { |v| 
+  coerce: proc { |v|
     case v
     when Chef::Node::ImmutableMash then v.to_hash
     else v
     end
   },
-  default: Hash.new
+  default: {}
 
 # Cookbook containing the template source
 # @since 0.1.0
@@ -146,12 +146,13 @@ action_class do
   end
 
   def nginx_instance_resource
-    @nginx_instance_resource = find_resources({
+    @nginx_instance_resource = find_resources(
       'resource_name' => :nginx_resources_instance,
       'name' => new_resource.instance
-    }).first
+    ).first
   end
 
+  # rubocop:disable Metrics/AbcSize
   def template_variables
     variables = {
       'listen' => new_resource.listen,
@@ -165,4 +166,3 @@ action_class do
     variables
   end
 end
-

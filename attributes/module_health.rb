@@ -6,4 +6,3 @@ default['nginx_resources']['health']['config'].tap do |config|
   config['maintenace_override'] = '/var/lib/nginx-maintenace-mode'
   config['access_log'] = false
 end
-
