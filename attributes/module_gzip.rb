@@ -24,4 +24,3 @@ default['nginx_resources']['gzip']['config'].tap do |config|
   ).join(' ')
   config['gzip_vary'] = 'off'
 end
-

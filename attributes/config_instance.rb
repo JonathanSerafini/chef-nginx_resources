@@ -22,4 +22,3 @@ default['nginx_resources']['instance']['config'].tap do |config|
   config['worker_processes'] = 'auto'
   config['worker_rlimit_nofile'] = 65000
 end
-

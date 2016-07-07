@@ -8,7 +8,7 @@ module NginxResources
                           else '^nginx_resources_'
                           end
           next unless r.resource_name =~ /#{resource_name.to_s}/
-          next unless search_params.all?{|p,v| r.send(p) == v}
+          next unless search_params.all?{|p, v| r.send(p) == v}
           true
         end
       end

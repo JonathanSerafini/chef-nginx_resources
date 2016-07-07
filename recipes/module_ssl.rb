@@ -33,7 +33,7 @@ end
 config = nginx_resources_config 'ssl' do
   category  'config'
   source    'config/generic.conf.erb'
-  configs    node['nginx_resources']['ssl']['config']
+  configs node['nginx_resources']['ssl']['config']
 end
 
 # Map to create the x_forwarded_https variable, which may be used when
@@ -59,7 +59,7 @@ bash 'generate_dhparam' do
     openssl dhparam -dsaparam -out /etc/ssl/dhparam.pem 4096
   EOH
   not_if do
-    ::File.exists?('/etc/ssl/dhparam.pem')
+    ::File.exist?('/etc/ssl/dhparam.pem')
   end
   only_if do
     node['nginx_resources']['ssl']['generate_dhparam']
@@ -71,4 +71,3 @@ end
 node.default['nginx_resources']['source'].tap do |source_attr|
   source_attr['builtin_modules']['http_ssl_module'] = true
 end
-

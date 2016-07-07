@@ -11,7 +11,7 @@ property :instance,
 # A priority prefix for the configurtion path in order to load in order
 # @since 0.1.0
 property :priority,
-  kind_of: [NilClass,String],
+  kind_of: [NilClass, String],
   coerce: proc { |v| v.to_s unless v.nil? },
   default: lazy { |r|
     case r.category
@@ -72,7 +72,7 @@ property :variables,
     else v
     end
   },
-  default: Hash.new
+  default: {}
 
 # Template nginx parameters to provide as variables under the `configs` hash.
 # @since 0.1.0
@@ -84,7 +84,7 @@ property :configs,
     else v
     end
   },
-  default: Hash.new
+  default: {}
 
 action :create do
   # Configuration file template
@@ -101,8 +101,8 @@ action :create do
 
     # A helper method to convert a hash into a string of key=value
     helper :hash_params do |hash|
-      hash.map do |k,v|
-        if [false,nil].include?(v) then next
+      hash.map do |k, v|
+        if [false, nil].include?(v) then next
         elsif v == true then k
         else "#{k}=#{v}"
         end
@@ -205,7 +205,7 @@ action_class do
   end
 
   def template_available_path(prefix = nil)
-    template_enabled_path(prefix).sub(/\.conf$/,'')
+    template_enabled_path(prefix).sub(/\.conf$/, '')
   end
 
   def template_path
@@ -225,4 +225,3 @@ action_class do
     variables
   end
 end
-

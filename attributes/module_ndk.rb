@@ -9,4 +9,3 @@ default['nginx_resources']['ndk']['module'].tap do |config|
   config['checksum']    = '88e05a99a8a7419066f5ae75966fb1efc409bad4' <<
                           '522d14986da074554ae61619'
 end
-

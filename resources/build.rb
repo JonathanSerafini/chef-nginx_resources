@@ -83,7 +83,7 @@ property :archive_depth,
 property :environment,
   kind_of: Hash,
   desired_state: false,
-  default: lazy { |r|
+  default: lazy { |_r|
     node['nginx_resources']['source']['environment'].to_hash
   }
 
@@ -91,7 +91,7 @@ property :environment,
 # @since 0.1.0
 property :builtin_modules,
   kind_of: Hash,
-  default: lazy { |r|
+  default: lazy { |_r|
     node['nginx_resources']['source']['builtin_modules'].to_hash
   }
 
@@ -100,7 +100,7 @@ property :builtin_modules,
 # @since 0.1.0
 property :external_modules,
   kind_of: Hash,
-  default: lazy { |r|
+  default: lazy { |_r|
     node['nginx_resources']['source']['external_modules'].to_hash
   }
 
@@ -108,7 +108,7 @@ property :external_modules,
 # @since 0.1.0
 property :additional_configure_flags,
   kind_of: Array,
-  default: lazy { |r|
+  default: lazy { |_r|
     node['nginx_resources']['source']['additional_configure_flags'].to_a
   }
 
@@ -126,9 +126,9 @@ load_current_value do |desired|
 
   builtin_modules Hash.new
   external_modules Hash.new
-  additional_configure_flags Array.new
+  additional_configure_flags []
 
-  unless ::File.exists?(desired.sbin_path)
+  unless ::File.exist?(desired.sbin_path)
     current_value_does_not_exist!
   end
 
@@ -232,7 +232,7 @@ action :remove do
       value = new_resource.send(prop)
       send(prop, value) unless value.nil?
     end
-    action  :delete
+    action :delete
     notifies :stop, resources(new_resource.service), :delayed
   end
 

@@ -16,7 +16,7 @@ nginx_resources_config 'core' do
   category 'config'
   priority '20'
   source   'config/core.conf.erb'
-  configs   node['nginx_resources']['core']['config']
+  configs node['nginx_resources']['core']['config']
 end
 
 nginx_resources_config 'custom' do
@@ -51,7 +51,7 @@ template 'nginx_service' do
     'sbin_path' => instance.sbin_path,
     'conf_path' => instance.conf_path,
     'pid_path'  => instance.pid_path,
-    'configs'   => node['nginx_resources'].fetch(init_style,{}).to_hash
+    'configs'   => node['nginx_resources'].fetch(init_style, {}).to_hash
   })
 
   case init_style

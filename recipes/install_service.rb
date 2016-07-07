@@ -21,4 +21,3 @@ service 'nginx' do
     node['nginx_resources']['service']['managed']
   end
 end
-

@@ -6,4 +6,3 @@ default['nginx_resources']['headers']['config'].tap do |config|
     header['X-Served-By'] = '$hostname'
   end
 end
-

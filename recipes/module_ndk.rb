@@ -6,4 +6,3 @@ nginx_resources_module 'module_ndk' do
   checksum  node['nginx_resources']['ndk']['module']['checksum']
   source    node['nginx_resources']['ndk']['module']['source']
 end
-

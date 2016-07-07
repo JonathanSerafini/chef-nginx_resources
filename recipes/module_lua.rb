@@ -31,6 +31,5 @@ end
 nginx_resources_config 'lua' do
   priority  '30'
   category  'config'
-  configs    node['nginx_resources']['lua']['config']
+  configs node['nginx_resources']['lua']['config']
 end
-

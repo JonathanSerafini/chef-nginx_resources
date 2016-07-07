@@ -8,13 +8,13 @@ resource_name :nginx_resources_instance
 # @since 0.1.0
 property :user,
   kind_of: String,
-  default: lazy { |r| node['nginx_resources']['user'] }
+  default: lazy { |_r| node['nginx_resources']['user'] }
 
 # The group name under which the service runs
 # @since 0.1.0
 property :group,
   kind_of: String,
-  default: lazy { |r| node['nginx_resources']['group'] }
+  default: lazy { |_r| node['nginx_resources']['group'] }
 
 # The root directory under which subdirs and files will be created
 # @since 0.1.0
@@ -52,7 +52,7 @@ property :sbin_path,
 # @since 0.1.0
 property :pid_dir,
   kind_of: String,
-  default: lazy { |r| node['nginx_resources']['pid_dir'] }
+  default: lazy { |_r| node['nginx_resources']['pid_dir'] }
 
 # The pid file path
 # @since 0.1.0
@@ -64,26 +64,26 @@ property :pid_path,
 # @since 0.1.0
 property :spool_dir,
   kind_of: String,
-  default: lazy { |r| node['nginx_resources']['spool_dir'] }
+  default: lazy { |_r| node['nginx_resources']['spool_dir'] }
 
 # The logging directory
 # @since 0.1.0
 property :log_dir,
   kind_of: String,
-  default: lazy { |r| node['nginx_resources']['log_dir'] }
+  default: lazy { |_r| node['nginx_resources']['log_dir'] }
 
 # The group owning the log files (ex.: admin under ubuntu)
 # @since 0.1.0
 property :log_group,
-	kind_of: String,
-  default: lazy { |r| node['nginx_resources']['log_group'] }
+  kind_of: String,
+  default: lazy { node['nginx_resources']['log_group'] }
 
 # The permissions of the logging directory
 # @since 0.1.0
 property :log_dir_perm,
   kind_of: String,
   coerce: proc { |v| v.to_s },
-  default: lazy { |r| node['nginx_resources']['log_dir_perm'] }
+  default: lazy { node['nginx_resources']['log_dir_perm'] }
 
 # The name of the service resource (so that dependant resources can notify)
 # @since 0.1.0
@@ -114,7 +114,7 @@ property :variables,
     else v
     end
   },
-  default: Hash.new
+  default: {}
 
 # Nginx parameters to add to the configuration file
 # @since 0.1.0
@@ -206,4 +206,3 @@ action_class do
     variables
   end
 end
-
