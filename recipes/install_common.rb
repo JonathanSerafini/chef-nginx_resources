@@ -36,19 +36,7 @@ end
 # Default virtualhost
 #
 nginx_resources_site 'default' do
-  %w(
-    priority
-    server_name
-    listen
-    listen_params
-    includes
-    root
-    locations
-    variables
-    cookbook
-    source
-    enabled
-  ).each do |key|
+  self.class.properties.each do |key, _|
     value = node['nginx_resources']['site']['default_site'][key]
     send(key, value) unless value.nil?
   end
