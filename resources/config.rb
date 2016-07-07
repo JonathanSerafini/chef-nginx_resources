@@ -25,7 +25,7 @@ property :priority,
 # @since 0.1.0
 property :category,
   kind_of: String,
-  equal_to: ['config', 'module', 'include', 'site'],
+  equal_to: %w(config module include site),
   required: true
 
 # Name of the configuration file without priority prefix

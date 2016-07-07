@@ -1,6 +1,5 @@
 
 default['nginx_resources']['lua']['module'].tap do |config|
-  v = '0.10.5'
   config['module_path'] = 'modules/ngx_http_lua_module'
   config['source']      = 'https://github.com/openresty/lua-nginx-module' <<
                           '/archive/v0.10.5.tar.gz'
