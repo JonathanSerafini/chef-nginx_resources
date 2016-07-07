@@ -1,0 +1,14 @@
+AllCops:
+  Exclude:
+    - 'vendor/**'
+    - 'spec/**'
+    - 'test/**'
+    - 'tmp/**'
+  TargetRubyVersion: 1.9
+
+Style/Encoding:
+  EnforcedStyle: always
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: always

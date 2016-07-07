@@ -1,0 +1,15 @@
+inherit_from: .rubocop_core.yml
+
+# Offense count: 78
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+# SupportedStyles: with_first_parameter, with_fixed_indentation
+Style/AlignParameters:
+  Exclude:
+    - 'resources/build.rb'
+    - 'resources/config.rb'
+    - 'resources/instance.rb'
+    - 'resources/module.rb'
+    - 'resources/site.rb'
+    - 'resources/source.rb'
+

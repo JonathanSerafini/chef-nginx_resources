@@ -8,14 +8,14 @@ resource_name :nginx_resources_module
 # @since 0.1.0
 property :instance,
   kind_of: String,
-  default: "default"
+  default: 'default'
 
 # A priority prefix for the configurtion path in order to load in order
 # @since 0.1.0
 property :priority,
   kind_of: String,
   coerce: proc { |v| v.to_s },
-  default: "50"
+  default: '50'
 
 # The version to be compiled
 # @since 0.1.0
@@ -95,8 +95,8 @@ action :install do
   nginx_resources_config new_resource.name do
     instance  new_resource.instance
     priority  new_resource.priority
-    category  "module"
-    source    "module/generic.conf.erb"
+    category  'module'
+    source    'module/generic.conf.erb'
     variables template_variables
     enabled   new_resource.enabled
     only_if do
@@ -122,7 +122,7 @@ action :delete do
 
   nginx_resources_config new_resource.name do
     instance  new_resource.instance
-    category  "module"
+    category  'module'
     action    :delete
   end
 
@@ -138,9 +138,8 @@ action_class do
   end
 
   def template_variables
-    { 
-      "module_path" => new_resource.module_path,
+    {
+      'module_path' => new_resource.module_path
     }
   end
 end
-
