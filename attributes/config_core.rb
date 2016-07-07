@@ -24,7 +24,7 @@ default['nginx_resources']['core']['config'].tap do |config|
 		- $status
 		- $request_time[$upstream_response_time]
 		- \"$request\""
-		- \"$http_user_agent\" 
+		- \"$http_user_agent\"
   ).join(' ')
 
   config['log_formats']['apache'] = %w(
@@ -55,10 +55,10 @@ default['nginx_resources']['core']['config'].tap do |config|
 
   config['tcp_nopush'] = true
   config['tcp_nodelay'] = true
-  
+
   config['types_hash_bucket_size'] = 64
   config['types_hash_max_size'] = 2048
-  
+
   config['underscores_in_headers'] = false
 
   config['variables_hash_bucket_size'] = 64

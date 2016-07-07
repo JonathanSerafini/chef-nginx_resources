@@ -8,7 +8,7 @@ nginx_resources_config 'proxy' do
 end
 
 # Configuration file containing global upstream definitions
-# 
+#
 nginx_resources_config 'proxy_upstreams' do
   category  'config'
   configs    node['nginx_resources']['proxy_upstreams']['config']

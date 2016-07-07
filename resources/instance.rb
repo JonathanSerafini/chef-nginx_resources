@@ -1,6 +1,6 @@
 # Instance resource which represents the directory structure of an nginx
 # deployment. Further resources such as Config, Build and Site will depend
-# on this. 
+# on this.
 #
 resource_name :nginx_resources_instance
 
@@ -20,8 +20,8 @@ property :group,
 # @since 0.1.0
 property :root_dir,
   kind_of: String,
-  default: lazy { |r| 
-    "#{node['nginx_resources']['root_dir']}/nginx-#{r.name}" 
+  default: lazy { |r|
+    "#{node['nginx_resources']['root_dir']}/nginx-#{r.name}"
   }
 
 # The configuration directory
@@ -108,7 +108,7 @@ property :cookbook,
 # @since 0.1.0
 property :variables,
   kind_of: Hash,
-  coerce: proc { |v| 
+  coerce: proc { |v|
     case v
     when Chef::Node::ImmutableMash then v.to_hash
     else v
@@ -120,7 +120,7 @@ property :variables,
 # @since 0.1.0
 property :configs,
   kind_of: Hash,
-  coerce: proc { |v| 
+  coerce: proc { |v|
     case v
     when Chef::Node::ImmutableMash then v.to_hash
     else v

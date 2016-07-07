@@ -67,7 +67,7 @@ property :source,
 property :archive,
   kind_of: String,
   desired_state: false,
-  default: lazy { |r| 
+  default: lazy { |r|
     "nginx-#{r.version}.tar.gz"
   }
 
@@ -112,7 +112,7 @@ property :additional_configure_flags,
     node['nginx_resources']['source']['additional_configure_flags'].to_a
   }
 
-# Whether we should force a re-compile of nginx, irrespective of whether 
+# Whether we should force a re-compile of nginx, irrespective of whether
 # the binary compile options have not changed
 # @since 0.1.0
 property :force_recompile,
@@ -283,7 +283,7 @@ action_class do
   end
 
   def configure_flags
-    [ 
+    [
       "--prefix=#{new_resource.prefix}",
       "--conf-path=#{new_resource.conf_path}",
       "--sbin-path=#{new_resource.sbin_path}"

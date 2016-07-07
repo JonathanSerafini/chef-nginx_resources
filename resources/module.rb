@@ -1,6 +1,6 @@
 # Module resource wraps Source and Config to ensure that we download source
-# tarballs, unpack them, update node attributes for module loading as well as 
-# add the module configuration file to an instance. 
+# tarballs, unpack them, update node attributes for module loading as well as
+# add the module configuration file to an instance.
 #
 resource_name :nginx_resources_module
 

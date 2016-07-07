@@ -20,7 +20,7 @@ property :priority,
     end
   }
 
-# The etc subfolder into which to install. This is also used to organize the 
+# The etc subfolder into which to install. This is also used to organize the
 # template source files.
 # @since 0.1.0
 property :category,
@@ -61,12 +61,12 @@ property :enabled,
   default: true
 
 # Template variables to provide. Generally used to provide configurations
-# other than nginx parameters and which will automatically have the 
+# other than nginx parameters and which will automatically have the
 # nginx_resources_instances paths injected.
 # @since 0.1.0
 property :variables,
   kind_of: Hash,
-  coerce: proc { |v| 
+  coerce: proc { |v|
     case v
     when Chef::Node::ImmutableMash then v.to_hash
     else v
@@ -78,7 +78,7 @@ property :variables,
 # @since 0.1.0
 property :configs,
   kind_of: Hash,
-  coerce: proc { |v| 
+  coerce: proc { |v|
     case v
     when Chef::Node::ImmutableMash then v.to_hash
     else v
@@ -146,8 +146,8 @@ action :create do
 
   # Support potentially deleting duplicates when the priority changes
   duplicates = []
-  duplicates.concat(::Dir.glob(template_enabled_path('*')))  
-  duplicates.concat(::Dir.glob(template_available_path('*')))  
+  duplicates.concat(::Dir.glob(template_enabled_path('*')))
+  duplicates.concat(::Dir.glob(template_available_path('*')))
   duplicates.delete(template_path)
 
   if duplicates.count > 1
@@ -160,7 +160,7 @@ action :create do
     end
   end
 end
-  
+
 action :delete do
   file template_path do
     action :delete

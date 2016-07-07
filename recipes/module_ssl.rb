@@ -36,14 +36,14 @@ config = nginx_resources_config 'ssl' do
   configs    node['nginx_resources']['ssl']['config']
 end
 
-# Map to create the x_forwarded_https variable, which may be used when 
+# Map to create the x_forwarded_https variable, which may be used when
 # proxying to ensure that backend servers know SSL was terminated on the
 # proxy.
 #
 nginx_resources_config 'ssl_map' do
   category 'config'
   source   'config/map.conf.erb'
-  configs  'from' => '$scheme', 
+  configs  'from' => '$scheme',
            'to' => '$x_forwarded_https',
            'mappings' => {
              'http' => false,

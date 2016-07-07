@@ -2,7 +2,7 @@
 #
 instance = resources("nginx_resources_instance[default]")
 init_style = node['nginx_resources']['service']['init_style']
-    
+
 service 'nginx' do
   case init_style
   when 'upstart'
