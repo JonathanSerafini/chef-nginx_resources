@@ -88,9 +88,7 @@ action :install do
     end
   end
 
-  if hook
-    recipe_eval(&hook)
-  end
+  recipe_eval(&hook) if hook
 
   nginx_resources_config new_resource.name do
     instance  new_resource.instance
@@ -110,7 +108,7 @@ action :install do
 end
 
 action :delete do
-  source = nginx_resources_source new_resource.name do
+  nginx_resources_source new_resource.name do
     %w(version archive).each do |prop|
       value = new_resource.send(prop)
       send(prop, value) unless value.nil?

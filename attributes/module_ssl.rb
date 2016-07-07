@@ -8,15 +8,13 @@ default['nginx_resources']['ssl'].tap do |config|
 end
 
 default['nginx_resources']['ssl']['module'].tap do |config|
-  v = '1.0.2h'
-
-  config['source'] = "https://www.openssl.org/source/openssl-#{v}.tar.gz"
-  config['version'] = "#{v}"
-  config['checksum'] = '1d4007e53aad94a5b2002fe045ee7bb0b3d98f1a47f8b2bc851dcd1c74332919'
+  config['source'] = 'https://www.openssl.org/source/openssl-1.0.2h.tar.gz'
+  config['version'] = '1.0.2h'
+  config['checksum'] = '1d4007e53aad94a5b2002fe045ee7bb0b3d98f1a47f8b2bc85' \
+                       '1dcd1c74332919'
 end
 
 default['nginx_resources']['ssl']['config'].tap do |config|
-  #config['ssl'] = true
   config['ssl_buffer_size'] = '16k'
   config['ssl_dhparam'] = '/etc/ssl/dhparam.pem'
   config['ssl_prefer_server_ciphers'] = true
@@ -29,6 +27,7 @@ default['nginx_resources']['ssl']['config'].tap do |config|
   supported_ciphers = []
 
   # Support PFS Diffie Helman enabled ciphers
+  # rubocop:disable Style/IndentArray
   supported_ciphers.concat(%w(
     kEECDH+ECDSA+AES128
     kEECDH+ECDSA+AES256

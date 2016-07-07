@@ -1,9 +1,11 @@
-inherit_from: .rubocop_core.yml
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'spec/**/*'
+    - 'test/**/*'
+    - 'tmp/**/*'
+  TargetRubyVersion: 1.9
 
-# Offense count: 78
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: with_first_parameter, with_fixed_indentation
 Style/AlignParameters:
   Exclude:
     - 'resources/build.rb'
@@ -12,4 +14,18 @@ Style/AlignParameters:
     - 'resources/module.rb'
     - 'resources/site.rb'
     - 'resources/source.rb'
+
+Style/Encoding:
+  Enabled: false
+
+Style/FileName:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/RegexpLiteral:
+  Exclude:
+    - 'resources/build.rb'
+    - 'resources/module.rb'
 

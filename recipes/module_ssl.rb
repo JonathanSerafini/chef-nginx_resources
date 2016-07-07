@@ -30,7 +30,7 @@ end
 
 # SSL configuration directives
 #
-config = nginx_resources_config 'ssl' do
+nginx_resources_config 'ssl' do
   category  'config'
   source    'config/generic.conf.erb'
   configs node['nginx_resources']['ssl']['config']
@@ -48,7 +48,7 @@ nginx_resources_config 'ssl_map' do
            'mappings' => {
              'http' => false,
              'https' => true
-            }
+           }
 end
 
 # Optionally generate a dhparam.pem hash file to provide better security with

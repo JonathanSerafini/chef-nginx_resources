@@ -100,6 +100,7 @@ action :create do
     end
 
     # A helper method to convert a hash into a string of key=value
+    # rubocop:disable Style/GuardClause
     helper :hash_params do |hash|
       hash.map do |k, v|
         if [false, nil].include?(v) then next
@@ -110,7 +111,7 @@ action :create do
     end
 
     # A helper method to join arrays to a string
-    helper :array_string do |array, delim=','|
+    helper :array_string do |array, delim = ','|
       Array(array).join(delim)
     end
 
@@ -133,10 +134,10 @@ action :create do
         'params' => nil
       }.merge(options)
 
-      unless Array(options['ignore']).include?(name) or value.nil?
+      unless Array(options['ignore']).include?(name) || value.nil?
         value = nginx_value(value)
         value << " #{nginx_value(options['params'])}" if options['params']
-        name  = "#{options['prefix']} #{name}" if options['prefix']
+        name = "#{options['prefix']} #{name}" if options['prefix']
         "#{name} #{value};"
       end
     end
@@ -212,6 +213,7 @@ action_class do
     new_resource.enabled ? template_enabled_path : template_available_path
   end
 
+  # rubocop:disable Metrics/AbcSize
   def template_variables
     variables = {
       'name'      => new_resource.name,

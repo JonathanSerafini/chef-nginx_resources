@@ -190,6 +190,8 @@ action_class do
     )
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def template_variables
     variables = {
       'name'      => new_resource.name,

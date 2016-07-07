@@ -47,18 +47,18 @@ end
 template 'nginx_service' do
   init_style = node['nginx_resources']['service']['init_style']
 
-  variables({
+  variables(
     'sbin_path' => instance.sbin_path,
     'conf_path' => instance.conf_path,
     'pid_path'  => instance.pid_path,
     'configs'   => node['nginx_resources'].fetch(init_style, {}).to_hash
-  })
+  )
 
   case init_style
   when 'upstart'
     path    '/etc/init/nginx.conf'
     source  'nginx-upstart.conf.erb'
-  else raise NotImplementedError.new('the nginx init_style is not supported')
+  else raise NotImplementedError, 'the nginx init_style is not supported'
   end
 
   only_if do
