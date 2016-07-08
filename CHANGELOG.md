@@ -1,5 +1,8 @@
 # nginx\_resources cookbook changelog
 
+## v0.2.2
+* Update dependencies for build-essential 6
+
 ## v0.2.1
 * Rubocop you HAVE FAILED ME! Bugfixes
 
