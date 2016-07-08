@@ -1,4 +1,4 @@
-<% @configs.keys.sort.each do |param_name| %>
+<% @configs.keys.each do |param_name| %>
   <% if param_name == 'log_formats' %>
     <% @configs['log_formats'].each do |format_name,format| %>
 <%= nginx_param(format_name, format, { 'prefix' => 'log_format' }) %>
