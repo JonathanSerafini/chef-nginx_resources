@@ -124,11 +124,11 @@ property :force_recompile,
 load_current_value do |desired|
   force_recompile false
 
-  builtin_modules {}
-  external_modules {}
+  builtin_modules Hash.new
+  external_modules Hash.new
   additional_configure_flags []
 
-  current_value_does_not_exist! ::File.exist?(desired.sbin_path)
+  current_value_does_not_exist! unless ::File.exist?(desired.sbin_path)
 
   shell_out!("#{desired.sbin_path} -V").stderr.each_line do |line|
     case line

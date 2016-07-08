@@ -1,5 +1,8 @@
 # nginx\_resources cookbook changelog
 
+## v0.2.1
+* Rubocop you HAVE FAILED ME! Bugfixes
+
 ## v0.2.0
 * Bugfixes
 * Rubocop style changes
