@@ -1,5 +1,10 @@
 # nginx\_resources cookbook changelog
 
+## v0.2.3
+* Ensure glib module installs the zlib dependencies
+* Ensure health module logs to access log by default
+* Ensure error log logs to main config dir
+
 ## v0.2.2
 * Update dependencies for build-essential 6
 

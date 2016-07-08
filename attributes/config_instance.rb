@@ -9,7 +9,7 @@ default['nginx_resources']['instance']['config'].tap do |config|
   config['pcre_jit'] = false
 
   config['env'] = {}
-  config['error_log'] = 'logs/error.log error'
+  config['error_log'] = '/var/log/nginx/error.log error'
 
   config['thread_pool'] = {
     'default' => {
