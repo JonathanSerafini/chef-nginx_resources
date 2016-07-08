@@ -1,5 +1,8 @@
 # nginx\_resources cookbook changelog
 
+## v0.2.4
+* Bugfix rubocop errors
+
 ## v0.2.3
 * Ensure glib module installs the zlib dependencies
 * Ensure health module logs to access log by default
