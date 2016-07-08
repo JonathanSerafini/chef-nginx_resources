@@ -124,6 +124,7 @@ property :force_recompile,
 load_current_value do |desired|
   force_recompile false
 
+  # rubocop:disable Style/EmptyLiteral
   builtin_modules Hash.new
   external_modules Hash.new
   additional_configure_flags []
@@ -131,31 +132,32 @@ load_current_value do |desired|
   current_value_does_not_exist! unless ::File.exist?(desired.sbin_path)
 
   shell_out!("#{desired.sbin_path} -V").stderr.each_line do |line|
+    # rubocop:disable Style/PerlBackrefs
     case line
-    when /^nginx version: nginx\/(?<match>.*)\n$/
-      version match
-    when /^configure arguments: (?<match>.*)\n$/
-      configure_arguments = match.split(' ')
+    when /^nginx version: nginx\/(.*)$/
+      version $1
+    when /^configure arguments: (.*)$/
+      configure_arguments = $1.split(' ')
       configure_arguments.each do |argument|
         case argument
-        when /^--prefix=(?<match>.*)/
-          prefix match
-        when /^--conf-path=(?<match>.*)/
-          conf_path match
-        when /^--sbin-path=(?<match>.*)/
-          sbin_path match
-        when /^(?<match>--with-.*=.*)/
-          additional_configure_flags << match
-        when /^--with-(?<match>[^=]*)/
-          builtin_modules[match] = true
-        when /^--without-(?<match>.*)/
-          builtin_modules[match] = false
-        when /^--add-module=(?<match>.*)/
-          external_modules[match] = 'static'
-        when /^--add-dynamic-module=(?<match>.*)/
-          external_modules[match] = 'dynamic'
+        when /^--prefix=(.*)/
+          prefix $1
+        when /^--conf-path=(.*)/
+          conf_path $1
+        when /^--sbin-path=(.*)/
+          sbin_path $1
+        when /^(--with-.*=.*)/
+          additional_configure_flags << $1
+        when /^--with-([^=]*)/
+          builtin_modules[$1] = true
+        when /^--without-(.*)/
+          builtin_modules[$1] = false
+        when /^--add-module=(.*)/
+          external_modules[$1] = 'static'
+        when /^--add-dynamic-module=(.*)/
+          external_modules[$1] = 'dynamic'
         else
-          additional_configure_flags << match
+          additional_configure_flags << $1
         end
       end
     end
