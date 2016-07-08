@@ -1,8 +1,6 @@
 # https://nginx.org/en/docs/http/ngx_http_core_module.html
 #
 default['nginx_resources']['core']['config'].tap do |config|
-  config['access_log'] = 'off' # TODO
-
   config['client_body_buffer_size'] = '128k'
   config['client_body_timeout'] = '60s'
   config['client_header_buffer_size'] = '1k'
@@ -17,7 +15,7 @@ default['nginx_resources']['core']['config'].tap do |config|
 
   config['large_client_header_buffers'] = '4 8k'
 
-  config['log_formats']['friendly_syslog'] = %w(
+  config['log_formats']['friendly_syslog'] = "'" + %w(
     $server_name:$server_port
     - $remote_addr
     - $upstream_addr
@@ -25,14 +23,16 @@ default['nginx_resources']['core']['config'].tap do |config|
     - $request_time[$upstream_response_time]
     - \"$request\""
     - \"$http_user_agent\"
-  ).join(' ')
+  ).join(' ') + "'"
 
-  config['log_formats']['apache'] = %w(
+  config['log_formats']['apache'] = "'" + %w(
     $remote_addr - $remote_user [$time_local]
     \"$request\" $status $body_bytes_sent
     \"$http_referer\" \"$http_user_agent\"
     \"$http_cookie\"
-  ).join(' ')
+  ).join(' ') + "'"
+
+  config['access_log'] = '/var/log/nginx/access.log apache'
 
   config['open_file_cache']['max'] = 2000
   config['open_file_cache']['inactive'] = '60s'
