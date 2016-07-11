@@ -39,6 +39,8 @@ default['nginx_resources']['upstart']['respawn_limit'] = nil
 
 # Default build options
 #
+default['nginx_resources']['source']['url'] = 'http://nginx.org/download/' \
+                                              'nginx-1.10.1.tar.gz'
 default['nginx_resources']['source']['version'] = '1.10.1'
 default['nginx_resources']['source']['checksum'] = '1fd35846566485e03c0e' \
   '318989561c135c598323ff349c503a6c14826487a801'
