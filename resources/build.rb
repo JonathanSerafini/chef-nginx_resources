@@ -1,4 +1,4 @@
-# Build resource which downloads and compiles nginx.
+# Build resource which compiles nginx.
 #
 resource_name :nginx_resources_build
 
@@ -6,9 +6,14 @@ resource_name :nginx_resources_build
 # @since 0.1.0
 property :version,
   kind_of: String,
-  default: lazy {
-    node['nginx_resources']['source']['version']
-  }
+  required: true
+
+# The folder containing the source code
+# @since 0.3.0
+property :source_dir,
+  kind_of: String,
+  desired_state: false,
+  required: true
 
 # The instance root directory
 # @since 0.1.0
@@ -34,7 +39,7 @@ property :conf_path,
 property :prefix,
   kind_of: String,
   default: lazy { |r|
-    "#{r.root_dir}/var/#{r.version}"
+    "#{r.root_dir}/var/nginx_#{r.version}"
   }
 
 # The name of the nginx service
@@ -43,40 +48,6 @@ property :service,
   kind_of: String,
   desired_state: false,
   required: true
-
-# The checksum of the source archive file
-# @since 0.1.0
-property :checksum,
-  kind_of: String,
-  desired_state: false,
-  default: lazy {
-    node['nginx_resources']['source']['checksum']
-  }
-
-# The URL from which to download the archive file
-# @since 0.1.0
-property :source,
-  kind_of: String,
-  desired_state: false,
-  default: lazy { |r|
-    "http://nginx.org/download/nginx-#{r.version}.tar.gz"
-  }
-
-# The name of the archive file we have downloaded and stored on disk
-# @since 0.1.0
-property :archive,
-  kind_of: String,
-  desired_state: false,
-  default: lazy { |r|
-    "nginx-#{r.version}.tar.gz"
-  }
-
-# The folders to strip after extracting the archive
-# @since 0.1.0
-property :archive_depth,
-  kind_of: Integer,
-  desired_state: false,
-  default: 1
 
 # Environment variables to define when executing commands
 # @since 0.1.0
@@ -172,13 +143,6 @@ action :install do
   end
 
   converge_if_changed do
-    nginx_resources_source 'nginx' do
-      %w(version checksum source archive archive_depth).each do |prop|
-        value = new_resource.send(prop)
-        send(prop, value) unless value.nil?
-      end
-    end
-
     bash 'configure_nginx' do
       environment new_resource.environment
       cwd build_path
@@ -227,15 +191,6 @@ action :install do
 end
 
 action :remove do
-  nginx_resources_source new_resource.name do
-    %w(version archive).each do |prop|
-      value = new_resource.send(prop)
-      send(prop, value) unless value.nil?
-    end
-    action :delete
-    notifies :stop, resources(new_resource.service), :delayed
-  end
-
   file new_resource.sbin_path do
     action :delete
   end

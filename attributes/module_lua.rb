@@ -8,10 +8,19 @@ default['nginx_resources']['lua']['module'].tap do |config|
                           '800e79c43eb37458347d4'
 end
 
+default['nginx_resources']['lua']['resty_core'].tap do |config|
+  config['source']      = 'https://github.com/openresty/lua-resty-core' \
+                          '/archive/v0.1.6.tar.gz'
+  config['version']     = '0.1.6'
+  config['checksum']    = '851c4f361cbb937037ba644f9c0543e830ea3b2127a9' \
+                          '5bd63f9d3da1e10f8db0'
+end
+
 default['nginx_resources']['lua']['config'].tap do |config|
   config['package_path'] = %w(
     /usr/share/lua/5.1
     /usr/local/share/lua/5.1
+    /var/chef/cache/resty_core-0.1.6/lib
   )
 
   config['package_cpath'] = %w(
@@ -23,3 +32,4 @@ default['nginx_resources']['lua']['config'].tap do |config|
   config['init']['includes'] = %w()
   config['init_worker']['includes'] = %w()
 end
+

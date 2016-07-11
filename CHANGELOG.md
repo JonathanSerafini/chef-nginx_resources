@@ -1,5 +1,13 @@
 # nginx\_resources cookbook changelog
 
+## v0.3.0
+* Update installation recipes to split the download and build phases
+* Add ngx lua ssl patch
+
+## v0.2.6
+* Resolve issue with lua.so loading
+* Install ngx resty_core which no longer seems to be automatic
+
 ## v0.2.5
 * Resolve logging syntax issue
 

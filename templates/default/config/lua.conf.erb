@@ -3,7 +3,7 @@
                           "#{path}/?.lua"
                         end.join(';')
     lua_package_cpath = @configs['package_cpath'].map do |path|
-                          "#{path}/?.lua"
+                          "#{path}/?.so"
                         end.join(';')
 %>
 lua_package_path  '<%= lua_package_path %>;;';
