@@ -28,6 +28,12 @@ nginx_resources_module 'module_lua' do
   source    node['nginx_resources']['lua']['module']['source']
 end
 
+nginx_resources_source 'resty_core' do
+  version   node['nginx_resources']['lua']['resty_core']['version']
+  checksum  node['nginx_resources']['lua']['resty_core']['checksum']
+  source    node['nginx_resources']['lua']['resty_core']['source']
+end
+
 nginx_resources_config 'lua' do
   priority  '30'
   category  'config'
