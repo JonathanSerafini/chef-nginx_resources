@@ -1,5 +1,8 @@
 # nginx\_resources cookbook changelog
 
+## v0.3.1
+* Add fastcgi_pass to locations handling
+
 ## v0.3.0
 * Update installation recipes to split the download and build phases
 * Add ngx lua ssl patch

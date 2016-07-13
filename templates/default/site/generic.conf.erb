@@ -40,6 +40,9 @@ server {
     <% if hash['proxy_pass'] %>
     proxy_pass <%= hash['proxy_pass'] %>;
     <% end %>
+    <% if hash['fastcgi_pass'] %>
+    fastcgi_pass <%= hash['fastcgi_pass'] %>;
+    <% end %>
   }
 
   <% end %>
