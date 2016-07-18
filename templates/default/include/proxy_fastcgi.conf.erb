@@ -1,9 +1,15 @@
-<% Array(@configs['fastcgi_extensions']).each do |ext| %>
+<% Array(@fastcgi_extensions).each do |ext| %>
 location ~\.<%= ext %> {
-  <%= nginx_param('fastcgi_pass', @configs['fastcgi_socket']) %>
+  <% @configs.each do |k,v| %>
+  <%= nginx_param(k,v) %>
+  <% end %>
+  <%= nginx_param('fastcgi_pass', @fastcgi_socket) %>
 }
 
 <% end %>
-location <%= @configs['fastcgi_location'] || '@proxy' %> {
-  <%= nginx_param('fastcgi_pass', @configs['fastcgi_socket']) %>
+location <%= @fastcgi_location || '@proxy' %> {
+  <% @configs.each do |k,v| %>
+  <%= nginx_param(k,v) %>
+  <% end %>
+  <%= nginx_param('fastcgi_pass', @fastcgi_socket) %>
 }
