@@ -1,5 +1,8 @@
 # nginx\_resources cookbook changelog
 
+## v0.4.0
+* Update proxy\_fastcgi template syntax
+
 ## v0.3.1
 * Add fastcgi_pass to locations handling
 
