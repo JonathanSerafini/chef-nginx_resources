@@ -1,5 +1,8 @@
 # nginx\_resources cookbook changelog
 
+## v0.4.1
+* Resolve issue with friendly syslog log format
+
 ## v0.4.0
 * Update proxy\_fastcgi template syntax
 
