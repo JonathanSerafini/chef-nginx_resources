@@ -16,12 +16,12 @@ default['nginx_resources']['core']['config'].tap do |config|
   config['large_client_header_buffers'] = '4 8k'
 
   config['log_formats']['friendly_syslog'] = "'" + %w(
-    $server_name:$server_port
+    $http_host:$server_port
     - $remote_addr
     - $upstream_addr
     - $status
     - $request_time[$upstream_response_time]
-    - \"$request\""
+    - \"$request\"
     - \"$http_user_agent\"
   ).join(' ') + "'"
 
