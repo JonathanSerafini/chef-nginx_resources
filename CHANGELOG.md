@@ -1,5 +1,8 @@
 # nginx\_resources cookbook changelog
 
+## v0.4.2
+* Allow to change the FASTCGI document\_root variable
+
 ## v0.4.1
 * Resolve issue with friendly syslog log format
 
