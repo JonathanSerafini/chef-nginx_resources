@@ -1,10 +1,13 @@
+<%
+document_root = @configs['fastcgi_param']['DOCUMENT_ROOT'] || '$document_root' 
+%>
 # Define the default fastcgi index file
 #
 set $fsn <%= @configs['default_index'] %>;
 
 # Ensure that FastCGI script is below the document root
 #
-if (-f $document_root$fastcgi_script_name) {
+if (-f <%= document_root %>$fastcgi_script_name) {
   set $fsn $fastcgi_script_name;
 }
 
@@ -25,6 +28,3 @@ fastcgi_split_path_info ^(.+?\.php)(/.*)$;
 <% @configs['fastcgi_param'].each do |key, value| %>
 <%= nginx_param(key, value, 'prefix' => 'fastcgi_param') %>
 <% end %>
-
-
-
