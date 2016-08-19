@@ -184,7 +184,7 @@ Further properties, with defaults, may be modified and are referenced in the [so
 This resource is designed to create-or-remove a file which the health check looks for when determining if it should return a 503 for maintenance mode. 
 
 The following properties are all *optional*:
-- path: The location of the maintenance file, defaults to: `node['nginx_resources']['health']['config']['maintenace_override']`
+- path: The location of the maintenance file, defaults to: `node['nginx_resources']['health']['config']['maintenance_override']`
 - compile\_time: Boolean which determins whether to run the action of _manage_ at compile time.
 - enable\_only\_if: A block which must return true/false determining whether maintenance mode should activated.
 - disable\_only\_if: A block which must return true/false determining whether the maintenance mode should be activated.

@@ -1,5 +1,5 @@
-# Maintenance resource is designed to enable/disable maintenance mode on the 
-# instance. It also provides facilities to force maintenance mode for the 
+# Maintenance resource is designed to enable/disable maintenance mode on the
+# instance. It also provides facilities to force maintenance mode for the
 # duration of a Chef run.
 #
 # @example
@@ -23,7 +23,7 @@ resource_name :nginx_resources_maintenance
 property :path,
   kind_of: String,
   default: lazy {
-    node['nginx_resources']['health']['config']['maintenace_override']
+    node['nginx_resources']['health']['config']['maintenance_override']
   }
 
 # Whether to apply the resource at compile time
@@ -42,14 +42,13 @@ end
 # @since 0.5.0
 property :enable_event,
   kind_of: String,
-  default: "converge_start"
+  default: 'converge_start'
 
 # Condition to determine whether to disable maintenance mode
 # @since 0.5.0
 def disable_only_if(&block)
   set_or_return(:disable_only_if, block, kind_of: Proc)
 end
-
 
 # Chef event_handler to hook into when disabling
 # @since 0.5.0
@@ -99,7 +98,7 @@ action :manage do
       end
 
       if ::File.exist?(new_resource.path)
-        Chef::Log.warn "Nginx maintenance is currently in effect"
+        Chef::Log.warn 'Nginx maintenance is currently in effect'
       end
     end if new_resource.enable_event
 
@@ -109,7 +108,7 @@ action :manage do
       end
 
       if ::File.exist?(new_resource.path)
-        Chef::Log.warn "Nginx maintenance is currently in effect"
+        Chef::Log.warn 'Nginx maintenance is currently in effect'
       end
     end if new_resource.disable_event
   end
@@ -121,15 +120,15 @@ action_class do
     true
   end
 
-	def maintenance_file_resource
+  def maintenance_file_resource
     file new_resource.path do
       action :nothing
     end
-	end
+  end
 
   def guard_evaluates_true?(guard)
     node = Chef.run_context.node
     new_resource = new_resource
     guard ? guard.call : true
-	end
+  end
 end

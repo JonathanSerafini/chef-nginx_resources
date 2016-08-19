@@ -1,7 +1,7 @@
 
 # Build nginx from source
 #
-nginx_resources_source "nginx_default" do
+nginx_resources_source 'nginx_default' do
   source    node['nginx_resources']['source']['url']
   version   node['nginx_resources']['source']['version']
   checksum  node['nginx_resources']['source']['checksum']
@@ -11,4 +11,3 @@ nginx_resources_source "nginx_default" do
     "nginx-#{node['nginx_resources']['source']['version']}"
   )
 end
-

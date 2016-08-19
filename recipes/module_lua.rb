@@ -40,7 +40,7 @@ nginx_resources_config 'lua' do
   configs node['nginx_resources']['lua']['config']
 end
 
-# Patch nginx with lua ssl support 
+# Patch nginx with lua ssl support
 # - https://raw.githubusercontent.com/openresty/lua-nginx-module/ssl-cert-by-lua/patches/nginx-ssl-cert.patch
 source = resources('nginx_resources_source[nginx_default]')
 patch_file = "#{Chef::Config['file_cache_path']}/ngx_lua_ssl.patch"
@@ -53,4 +53,3 @@ execute 'apply_ngx_ssl_lua_patch' do
   not_if  %(patch -p1 --dry-run --reverse --silent < #{patch_file}),
             'cwd' => source.deploy_path
 end
-
