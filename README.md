@@ -3,11 +3,6 @@ nginx_resources cookbook
 
 Installs nginx and dependant modules from source in a modular fashion.
 
-Status
-------
-
-This is an initial release of the cookbook which has been through minor non-exhaustive testing. Additional work needs to be done to test more extensively as well as to flesh out the documentation. That being said, the interfaces ought to be fairly consistent moving forward.
-
 Requirements
 ------------
 
@@ -40,6 +35,49 @@ Calling the standard `nginx_resources::default` recipe will cause the following 
   - The `nginx_resources_build[default]` resources is created
 - `recipes/install_service` is called
   - The service is created and optionally started
+
+Usage
+-----
+
+1. Within your cookbook, define an *optional* attribute file to customize the `nginx_resources` attributes to your liking. Each and every configuration parameter used by this cookbook is attribute driven.
+2. Include the `nginx_resources::default` recipe in your run\_list.
+3. Customize the `nginx_resources_site[default]` resource.
+
+Example
+```
+r = resources('nginx_resources_site[default]')
+r.root '/var/www/backofficev2/current/public'
+r.listen [80, '443 ssl']
+r.locations [
+  { 'uri' => '/',
+    'try_files' => '$uri @proxy'
+  },
+  { 'uri' => '/admin/',
+    'configs' => {
+      'rewrite' => '^/admin/assets(/?.*)$ /assets$1 last'
+    },
+    'try_files' => '$uri @proxy'
+  },
+  { 'uri' => '~\.php',
+    'configs' => {
+      'proxy_send_timeout' => 600,
+      'proxy_read_timeout' => 600
+    },
+    'fastcgi_pass' => '127.0.0.1:9000'
+  },
+  { 'uri' => '@proxy',
+    'configs' => {
+      'proxy_send_timeout' => 600,
+      'proxy_read_timeout' => 600
+    },
+    'fastcgi_pass' => '127.0.0.1:9000'
+  }
+]
+r.includes << 'include.d/fastcgi.conf'
+r.includes << 'include.d/stub_status.conf'
+r.includes << 'include.d/health.conf'
+r.enabled true
+```
 
 Custom Resources
 ----------------
@@ -140,4 +178,16 @@ The following properties are *required* and have no defaults:
 - service: The service resource name to notify
 
 Further properties, with defaults, may be modified and are referenced in the [source](resources/build.rb) file.
+
+### nginx\_resources\_maintenance
+
+This resource is designed to create-or-remove a file which the health check looks for when determining if it should return a 503 for maintenance mode. 
+
+The following properties are all *optional*:
+- path: The location of the maintenance file, defaults to: `node['nginx_resources']['health']['config']['maintenance_override']`
+- compile\_time: Boolean which determins whether to run the action of _manage_ at compile time.
+- enable\_only\_if: A block which must return true/false determining whether maintenance mode should activated.
+- disable\_only\_if: A block which must return true/false determining whether the maintenance mode should be activated.
+
+ Further properties, with defaults, may be modified and are referenced in the [source](resources/maintenance.rb) file.
 

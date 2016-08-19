@@ -32,4 +32,3 @@ default['nginx_resources']['lua']['config'].tap do |config|
   config['init']['includes'] = %w()
   config['init_worker']['includes'] = %w()
 end
-
