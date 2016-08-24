@@ -6,9 +6,9 @@ location <%= @configs['uri'] %> {
   <% Array(@configs['deny']).each do |deny| %>
   deny <%= deny %>;
   <% end %>
-  <% if @configs['maintenace_override'] %>
+  <% if @configs['maintenance_override'] %>
 
-  if (-f <%= @configs['maintenace_override'] %>) {
+  if (-f <%= @configs['maintenance_override'] %>) {
     return 503;
   }
   <% end %>
