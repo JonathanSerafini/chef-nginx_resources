@@ -1,5 +1,11 @@
 # nginx\_resources cookbook changelog
 
+## v0.5.1
+* Resolve maintenance mode deletion bug
+
+## v0.5.0
+* Add maintenance mode resource
+
 ## v0.4.2
 * Allow to change the FASTCGI document\_root variable
 
