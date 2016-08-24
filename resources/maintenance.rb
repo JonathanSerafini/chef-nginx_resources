@@ -104,7 +104,7 @@ action :manage do
 
     on new_resource.disable_event.to_sym do
       if new_resource.guard_evaluates_true?(new_resource.disable_only_if)
-        ::File.rm(new_resource.path)
+        ::File.delete(new_resource.path) if ::File.exist?(new_resource.path)
       end
 
       if ::File.exist?(new_resource.path)
