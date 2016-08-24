@@ -1,5 +1,8 @@
 # nginx\_resources cookbook changelog
 
+## v0.5.2
+* Resolve typo in healthcheck template
+
 ## v0.5.1
 * Resolve maintenance mode deletion bug
 
