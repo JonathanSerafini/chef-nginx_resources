@@ -1,8 +1,8 @@
 location <%= @configs['uri'] %> {
-  <% if @config['access_log'] == false %>
+  <% if @configs['access_log'] == false %>
   access_log 'off';
-  <% elsif @config['access_log'] != true %>
-  access_log <%= @config['access_log'] %>;
+  <% elsif @configs['access_log'] != true %>
+  access_log <%= @configs['access_log'] %>;
   <% end %>
   <% Array(@configs['allow']).each do |allow| %>
   allow <%= allow %>;
